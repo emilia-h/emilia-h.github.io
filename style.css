@@ -102,6 +102,9 @@ body.dark-mode {
 body.dark-mode a {
     color: #98D;
 }
+body.dark-mode main a:hover {
+    color: #68A;
+}
 
 body.dark-mode header {
     background-color: black;
