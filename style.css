@@ -13,10 +13,11 @@ body {
     flex-flow: column;
 }
 
-/* layout */
+/* layout of header */
 
 header {
     display: flex;
+    flex-flow: row;
     align-items: center;
     min-height: 60px;
     padding: 5px 0 5px 0;
@@ -30,7 +31,9 @@ header {
     width: 15vw;
 }
 #header-center {
-    flex: 2;
+    flex: 1;
+    display: flex;
+    flex-flow: row;
 }
 #header-right {
     display: flex;
@@ -39,9 +42,21 @@ header {
     width: 15vw;
 }
 
-main {
-    flex: 2;
+.menu-item {
+    padding-right: 30px;
+}
+
+/* layout of lower body (main and footer) */
+
+#lower-body {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
     overflow: auto;
+}
+
+main {
+    flex: 1;
     padding: 20px 15vw 20px 15vw;
 }
 
@@ -183,4 +198,9 @@ ul > li {
 }
 ul > li::before {
     content: '- ';
+}
+
+td, th {
+    text-align: left;
+    padding: 10px 20px 10px 0;
 }
