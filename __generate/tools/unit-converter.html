@@ -1,0 +1,99 @@
+
+#HEAD
+<title>Unit Converter - emi-h.com</title>
+
+<script>
+    // ...
+</script>
+
+#MAIN
+<h1 id="title"><a href="#title">Unit Converter</a></h1>
+
+<p>Input quantity:</p>
+
+<div class="input-element">
+    <input type="radio" name="in-quantity" id="in-quantity-amount-of-substance" checked />
+    <label for="in-quantity-amount-of-substance">Amount of substance</label>
+</div>
+
+<div class="input-element">
+    <input type="radio" name="in-quantity" id="in-quantity-concentration" />
+    <label for="in-quantity-concentration">Concentration</label>
+</div>
+
+<div class="input-element">
+    <input type="radio" name="in-quantity" id="in-quantity-mass" />
+    <label for="in-quantity-mass">Mass</label>
+</div>
+
+<div class="input-element">
+    <input type="radio" name="in-quantity" id="in-quantity-molarity" />
+    <label for="in-quantity-molarity">Molarity</label>
+</div>
+
+<div class="input-element">
+    <input type="radio" name="in-quantity" id="in-quantity-time" />
+    <label for="in-quantity-time">Time</label>
+</div>
+
+<p>Output quantity:</p>
+
+<div class="input-element">
+    <input type="radio" name="out-quantity" id="out-quantity-same" checked />
+    <label for="out-quantity-same">(Same quantity)</label>
+</div>
+
+<div class="input-element">
+    <input type="radio" name="out-quantity" id="out-quantity-amount-of-substance" />
+    <label for="out-quantity-amount-of-substance">Amount of substance</label>
+</div>
+
+<div class="input-element">
+    <input type="radio" name="out-quantity" id="out-quantity-concentration" />
+    <label for="out-quantity-concentration">Concentration</label>
+</div>
+
+<div class="input-element">
+    <input type="radio" name="out-quantity" id="out-quantity-mass" />
+    <label for="out-quantity-mass">Mass</label>
+</div>
+
+<div class="input-element">
+    <input type="radio" name="out-quantity" id="out-quantity-molarity" />
+    <label for="out-quantity-molarity">Molarity</label>
+</div>
+
+<div class="substance-input">
+    <p>Substance:</p>
+
+    <div class="input-element">
+        <input type="text" id="substance" list="substance-list" />
+    </div>
+</div>
+
+<p>Input value and unit:</p>
+
+<div class="input-element">
+    <input type="text" id="in-value" style="margin-right: 2em;" />
+    <input type="text" id="in-unit-dividend" style="width: 3em;" />
+    <span id="in-slash"> / </span>
+    <input type="text" id="in-unit-divisor" style="width: 3em;" />
+</div>
+
+<p>Output unit:</p>
+
+<div class="input-element">
+    <input type="text" id="out-unit-dividend" style="width: 3em;" />
+    <span id="out-slash"> / </span>
+    <input type="text" id="out-unit-divisor" style="width: 3em;" />
+</div>
+
+<p>Result: <span id="out-value"></span></p>
+
+<datalist id="substance-list">
+    <option value="estradiol"></option>
+    <option value="testosterone"></option>
+</datalist>
+
+<script type="text/javascript" src="/scripts/unit-converter.js">
+</script>

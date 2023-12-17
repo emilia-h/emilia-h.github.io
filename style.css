@@ -19,23 +19,26 @@ header {
     display: flex;
     flex-flow: row;
     align-items: center;
-    min-height: 60px;
+    min-height: 3.5em;
     padding: 5px 0 5px 0;
     border-style: solid;
     border-width: 0 0 2px 0;
 }
 #header-left {
+    padding: 0.15em 0;
     display: flex;
     flex-flow: column;
     align-items: center;
     width: 15vw;
 }
 #header-center {
-    flex: 1;
+    flex-grow: 1;
     display: flex;
     flex-flow: row;
+    flex-wrap: wrap;
 }
 #header-right {
+    padding: 0.15em 0;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -43,7 +46,11 @@ header {
 }
 
 .menu-item {
-    padding-right: 30px;
+    padding: 0.15em 0.25em;
+    margin: 0.15em 0.25em;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 }
 
 /* layout of lower body (main and footer) */
@@ -57,18 +64,18 @@ header {
 
 main {
     flex: 1;
-    padding: 20px 15vw 20px 15vw;
+    padding: 2em 15vw 2em 15vw;
 }
 
 footer {
     font-size: 14px;
-    padding: 20px 15vw 20px 15vw;
+    padding: 2em 15vw 2em 15vw;
     border-style: solid;
     border-width: 2px 0 0 0;
 }
 #footer-table td {
-    min-width: 5px;
-    padding: 2px 20px;
+    min-width: 10em;
+    padding: 0.2em 1.5em 0.2em 0;
 }
 #footer-table a {
     color: inherit;
@@ -79,9 +86,12 @@ footer {
 
 body.light-mode {
     color: black;
-    background-color: #DDD;
+    background-color: #111;
 }
 
+body.light-mode main {
+    background-color: #DDD;
+}
 body.light-mode main a {
     color: #65F;
 }
@@ -111,9 +121,12 @@ body.light-mode footer {
 
 body.dark-mode {
     color: #DDD;
-    background-color: #111;
+    background-color: black;
 }
 
+body.dark-mode main {
+    background-color: #111;
+}
 body.dark-mode a {
     color: #98D;
 }
@@ -203,4 +216,45 @@ ul > li::before {
 td, th {
     text-align: left;
     padding: 10px 20px 10px 0;
+}
+
+.no-display {
+    display: none;
+}
+
+/* form inputs */
+
+.input-element {
+    display: flex;
+    flex-flow: row;
+    align-content: center;
+    margin: 0.5em;
+}
+
+input[type='radio'] {
+    appearance: none;
+
+    border-radius: 50%;
+    width: 1.3em;
+    height: 1.3em;
+
+    border: 2px solid #999;
+    margin-right: 5px;
+
+    position: relative;
+    top: 4px;
+}
+input[type='radio']:checked {
+    border: 3px solid #65F;
+}
+
+input[type='text'] {
+    padding: 0.2em;
+    font: inherit;
+    border: 0;
+    background-color: #DDD;
+}
+body.dark-mode input[type='text'] {
+    color: white;
+    background-color: #333;
 }

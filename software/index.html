@@ -5,9 +5,10 @@
     <title>Software Projects - emi-h.com</title>
 
     <link rel="stylesheet" href="/style.css"></link>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="text/javascript">
         function getCookie(name) {
-            const value = document.cookie.split(';' ).find((x) => x.startsWith('pref='));
+            const value = document.cookie.split('; ').find((x) => x.startsWith(name + '='));
             return value ? value.split('=')[1] : null;
         }
     </script>
@@ -16,7 +17,9 @@
 <body class="light-mode">
     <header>
         <div id="header-left">
-            <a href="/">emi-h.com</a>
+            <div class="menu-item">
+                <a href="/">emi-h.com</a>
+            </div>
         </div>
         <div id="header-center">
             <div class="menu-item">
@@ -28,15 +31,25 @@
             <div class="menu-item">
                 <a href="/articles">Articles</a>
             </div>
+            <div class="menu-item">
+                <a href="/resources">Resources</a>
+            </div>
+            <div class="menu-item">
+                <a href="/tools">Tools</a>
+            </div>
         </div>
         <div id="header-right" style="cursor: pointer;">
-            <a onclick="toggleMode();">Toggle theme</a>
+            <div class="menu-item">
+                <a onclick="toggleMode();">Toggle theme</a>
+            </div>
         </div>
     </header>
     <div id="lower-body">
         <main>
             <h1 id="title"><a href="#title">Projects</a></h1>
+
             <p>See my <a href="https://github.com/emilia-h">github page</a> for my software projects.</p>
+
             <p>I still have to put my projects here.</p>
         </main>
         <footer>
@@ -67,7 +80,7 @@
             document.cookie = `pref=${theme}; samesite=strict; path=/`;
         }
 
-        const previousSetting = getCookie();
+        const previousSetting = getCookie('pref');
         if ((previousSetting && previousSetting !== theme) ||
             (!previousSetting && window.matchMedia &&
             window.matchMedia('(prefers-color-scheme: dark)').matches)

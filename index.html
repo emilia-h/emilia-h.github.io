@@ -7,9 +7,10 @@
     <title>Main page - emi-h.com</title>
 
     <link rel="stylesheet" href="/style.css"></link>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="text/javascript">
         function getCookie(name) {
-            const value = document.cookie.split(';' ).find((x) => x.startsWith('pref='));
+            const value = document.cookie.split('; ').find((x) => x.startsWith(name + '='));
             return value ? value.split('=')[1] : null;
         }
     </script>
@@ -18,7 +19,9 @@
 <body class="light-mode">
     <header>
         <div id="header-left">
-            <a href="/">emi-h.com</a>
+            <div class="menu-item">
+                <a href="/">emi-h.com</a>
+            </div>
         </div>
         <div id="header-center">
             <div class="menu-item">
@@ -30,14 +33,23 @@
             <div class="menu-item">
                 <a href="/articles">Articles</a>
             </div>
+            <div class="menu-item">
+                <a href="/resources">Resources</a>
+            </div>
+            <div class="menu-item">
+                <a href="/tools">Tools</a>
+            </div>
         </div>
         <div id="header-right" style="cursor: pointer;">
-            <a onclick="toggleMode();">Toggle theme</a>
+            <div class="menu-item">
+                <a onclick="toggleMode();">Toggle theme</a>
+            </div>
         </div>
     </header>
     <div id="lower-body">
         <main>
             <h1 id="title"><a href="#title">emi-h.com</a></h2>
+
             <p>Hi, I am a computer science student, teacher on the side and enthusiast of:</p>
             <ul>
                 <li>Programming and open source</li>
@@ -47,18 +59,22 @@
             </ul>
 
             <h2 id="music"><a href="#music">Music</a></h2>
+
             <p>
                 My most recent work is an arrangement for the piano of the song Paranoid Android by Radiohead, from their
-                famous album OK Computer (<a href="https://yewtu.be/watch?v=fHiGbolFFGw">invidious link</a>,
-                <a href="https://youtube.com/watch?v=fHiGbolFFGw">youtube link</a>).
+                famous album OK Computer
+                (<a href="https://yewtu.be/watch?v=fHiGbolFFGw" target="_blank">invidious link</a>,
+                <a href="https://youtube.com/watch?v=fHiGbolFFGw" target="_blank">youtube link</a>).
             </p>
             <p><a download href="music/radiohead/paranoid-android-piano.pdf">The arrangement can be found here.</a></p>
             <p><a href="music">Link to music page.</a></p>
 
             <h2 id="articles-guides"><a href="#articles-guides">Articles and Guides</a></h2>
+
             <p>I have written a few small guides, coming soon(TM) to this website.</p>
 
             <h2 id="projects"><a href="#projects">Projects</a></h2>
+
             <p>I'm going to post these soon. Currently working on a library for validating systems.</p>
         </main>
         <footer>
@@ -89,7 +105,7 @@
             document.cookie = `pref=${theme}; samesite=strict; path=/`;
         }
 
-        const previousSetting = getCookie();
+        const previousSetting = getCookie('pref');
         if ((previousSetting && previousSetting !== theme) ||
             (!previousSetting && window.matchMedia &&
             window.matchMedia('(prefers-color-scheme: dark)').matches)
