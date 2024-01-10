@@ -2,10 +2,6 @@
 #HEAD
 <title>Unit Converter - emi-h.com</title>
 
-<script>
-    // ...
-</script>
-
 #MAIN
 <h1 id="title"><a href="#title">Unit Converter</a></h1>
 
@@ -88,12 +84,13 @@
     <input type="text" id="out-unit-divisor" style="width: 3em;" />
 </div>
 
-<p>Result: <span id="out-value"></span></p>
+<p><span id="out-value"></span></p>
 
 <datalist id="substance-list">
     <option value="estradiol"></option>
     <option value="testosterone"></option>
 </datalist>
 
+<!-- TODO: move this script more downward, so dark theme loads faster -->
 <script type="text/javascript" src="/scripts/unit-converter.js">
 </script>

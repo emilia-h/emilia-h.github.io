@@ -1,4 +1,7 @@
-let currentInQuantity = 'amount-of-substance';
+
+// global state
+let currentInQuantity = getQuantity('in');
+let currentOutQuantity = getQuantity('out');
 
 function getQuantity(type) {
     const inQuantityElement = document.querySelector('input[name="' + type + '-quantity"]:checked');
@@ -44,6 +47,75 @@ function getDefaultUnit(quantity) {
     }
 }
 
+function createSITable(unit) {
+    return {
+        ['p' + unit]: 1e-12,
+        ['n' + unit]: 1e-9,
+        ['u' + unit]: 1e-6,
+        ['m' + unit]: 1e-3,
+        ['c' + unit]: 1e-2,
+        ['d' + unit]: 1e-1,
+        [unit]: 1,
+        ['da' + unit]: 1e1,
+        ['h' + unit]: 1e2,
+        ['k' + unit]: 1e3,
+        ['M' + unit]: 1e6,
+        ['G' + unit]: 1e9,
+        ['T' + unit]: 1e12,
+    };
+}
+
+conversionTable = {
+    'amount-of-substance': createSITable('mol'),
+    volume: {
+        ...createSITable('L'),
+        ...createSITable('l'),
+    },
+    mass: createSITable('g'),
+    time: {
+        s: 1,
+        second: 1,
+        seconds: 1,
+        min: 60,
+        minute: 60,
+        minutes: 60,
+        h: 60 * 60,
+        hour: 60 * 60,
+        hours: 60 * 60,
+        d: 60 * 60 * 24,
+        day: 60 * 60 * 24,
+        days: 60 * 60 * 24,
+        w: 60 * 60 * 24 * 7,
+        week: 60 * 60 * 24 * 7,
+        weeks: 60 * 60 * 24 * 7,
+    },
+};
+
+function calculateConversionFactor(quantity, unit) {
+    let quantityParts;
+    if (quantity === 'concentration') {
+        quantityParts = ['mass', 'volume'];
+    } else if (quantity === 'molarity') {
+        quantityParts = ['amount-of-substance', 'volume'];
+    } else {
+        quantityParts = [quantity];
+    }
+
+    const factor1 = conversionTable[quantityParts[0]][unit[0]];
+
+    let factor2 = 1;
+    if (quantityParts.length === 2) {
+        factor2 = conversionTable[quantityParts[1]][unit[1]];
+    }
+
+    if (!factor1 || !factor2) {
+        return NaN;
+    } else {
+        return factor1 / factor2;
+    }
+}
+
+// `type` is 'in' or 'out'
 function updateUnitField(type, placeholderUnit) {
     const dividendUnitElement = document.getElementById(type + '-unit-dividend');
     const slashElement = document.getElementById(type + '-slash');
@@ -60,6 +132,11 @@ function updateUnitField(type, placeholderUnit) {
     } else {
         console.error('no default unit');
     }
+}
+
+function clearUnitField(type) {
+    const dividendUnitElement = document.getElementById(type + '-unit-dividend');
+    const divisorUnitElement = document.getElementById(type + '-unit-divisor');
     dividendUnitElement.value = '';
     divisorUnitElement.value = '';
 }
@@ -112,74 +189,102 @@ function updateConverter() {
     // TODO
 
     if (inQuantity !== currentInQuantity) {
+        currentInQuantity = inQuantity;
+
+        clearUnitField('in');
+
         // set a target quantity to checked to always have something checked
         document.getElementById('out-quantity-same').checked = true;
-
-        // set placeholders for units
-        const placeholderInUnit = getDefaultUnit(inQuantity);
-        updateUnitField('in', placeholderInUnit);
-
-        currentInQuantity = inQuantity;
+        document.getElementById('out-value').textContent = '';
     }
+
+    // set placeholders for units
+    const placeholderInUnit = getDefaultUnit(inQuantity);
+    updateUnitField('in', placeholderInUnit);
 
     const outQuantity = getQuantity('out');
     if (!outQuantity) return;
 
     const placeholderOutUnit = getDefaultUnit(outQuantity === 'same' ? inQuantity : outQuantity);
     updateUnitField('out', placeholderOutUnit);
+
+    if (outQuantity !== currentOutQuantity) {
+        currentOutQuantity = outQuantity;
+
+        clearUnitField('out');
+    }
 }
 
 function updateOut() {
     const inQuantity = getQuantity('in');
-    const inValueElement = document.getElementById('in-value');
-    const inValue = parseFloat(inValueElement.value);
+    const inValue = parseFloat(document.getElementById('in-value').value);
+    if (isNaN(inValue)) {
+        document.getElementById('out-value').textContent = 'No valid number given.';
+        return;
+    }
+
     const inUnit = getUnit('in', inQuantity);
+    const inDisplayUnit = inUnit.length === 2 ? `${inUnit[0]}/${inUnit[1]}` : String(inUnit[0]);
 
     const substance = document.getElementById('substance').value;
 
     const outQuantity = getQuantity('out');
-    const outUnit = getUnit('out', outQuantity === 'same' ? inQuantity : outQuantity);
+    const realOutQuantity = outQuantity === 'same' ? inQuantity : outQuantity;
+    const outUnit = getUnit('out', realOutQuantity);
+    const outDisplayUnit = outUnit.length === 2 ? `${outUnit[0]}/${outUnit[1]}` : String(outUnit[0]);
 
     console.log(`${inQuantity}: ${inValue} ${inUnit} to ${outQuantity}: ${outUnit}`);
 
-    let out = 'unknown';
-
-    switch (inQuantity) {
-        case 'amount-of-substance':
-            // TODO
-            break;
-        case 'concentration':
-            // TODO
-            break;
-        case 'mass':
-            // TODO
-            break;
-        case 'molarity':
-            if (outQuantity === 'same') {
-                // TODO
-            } else if (outQuantity === 'concentration') {
-                if (
-                    substance === 'estradiol' &&
-                    inUnit[0] === 'pmol' && inUnit[1] === 'L' &&
-                    outUnit[0] === 'pg' && outUnit[1] === 'mL'
-                ) {
-                    const factor = 0.27238;
-                    out = inValue * factor;
-                }
-            }
-            break;
-        case 'time':
-            // TODO
-            break;
+    const inFactor = calculateConversionFactor(inQuantity, inUnit);
+    if (isNaN(inFactor)) {
+        document.getElementById('out-value').textContent =
+            `No unit '${inDisplayUnit}' for quantity ${inQuantity}.`;
+        return;
     }
 
-    const displayValue = inValue + ' ' + inUnit[0] +
-        (inUnit.length >= 2 ? '/' + inUnit[1] : '') +
-        (substance ? ' of ' + substance : '') +
-        ' corresponds to ' + out + ' ' + outUnit[0] +
-        (outUnit.length >= 2 ? '/' + outUnit[1] : '');
-    console.log(displayValue);
-    document.getElementById('out-value').textContent = displayValue;
+    const outFactor = calculateConversionFactor(realOutQuantity, outUnit);
+    if (isNaN(outFactor)) {
+        document.getElementById('out-value').textContent =
+            `No unit '${outDisplayUnit}' for quantity ${realOutQuantity}.`;
+        return;
+    }
+
+    let result = NaN;
+    if (outQuantity === 'same') {
+        result = inValue * inFactor / outFactor;
+    } else if (inQuantity === 'amount-of-substance' && outQuantity === 'mass') {
+        // TODO
+    } else if (inQuantity === 'concentration' && outQuantity === 'molarity') {
+        // TODO
+    } else if (inQuantity === 'mass' && outQuantity === 'amount-of-substance') {
+        // TODO
+    } else if (inQuantity === 'molarity' && outQuantity === 'concentration') {
+        // 1 mol/L corresponds to ??? g/L
+        let substanceFactor = NaN;
+        if (substance === 'estradiol') {
+            substanceFactor = 2.7238e2;
+        } else if (substance === 'testosterone') {
+            substanceFactor = 2.8842e2;
+        } else {
+            document.getElementById('out-value').textContent = `The substance ${substance} is unknown.`;
+            return;
+        }
+        result = inValue * substanceFactor * inFactor / outFactor;
+    }
+
+    if (isNaN(result)) {
+        document.getElementById('out-value').textContent =
+            'Calculations could not be made with these inputs.';
+    } else {
+        const displayValue = inValue + ' ' + inUnit[0] +
+            (inUnit.length >= 2 ? '/' + inUnit[1] : '') +
+            (substance ? ' of ' + substance : '') +
+            (outQuantity === 'same' ? ' = ' : ' corresponds to ') +
+            result + ' ' + outUnit[0] +
+            (outUnit.length >= 2 ? '/' + outUnit[1] : '');
+
+        document.getElementById('out-value').textContent = displayValue;
+    }
 }
 
 updateConverter();
@@ -189,6 +294,7 @@ const radioElements = document.querySelectorAll('main .input-element input[type=
 for (const radioElement of radioElements) {
     radioElement.addEventListener('change', function(event) {
         updateConverter();
+        updateOut();
     });
 }
 

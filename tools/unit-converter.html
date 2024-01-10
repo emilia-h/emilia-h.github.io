@@ -4,10 +4,6 @@
 <head>
     <title>Unit Converter - emi-h.com</title>
 
-    <script>
-        // ...
-    </script>
-
     <link rel="stylesheet" href="/style.css"></link>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="text/javascript">
@@ -42,9 +38,9 @@
                 <a href="/tools">Tools</a>
             </div>
         </div>
-        <div id="header-right" style="cursor: pointer;">
+        <div id="header-right">
             <div class="menu-item">
-                <a onclick="toggleMode();">Toggle theme</a>
+                <a onclick="toggleMode();" style="cursor: pointer;">Toggle theme</a>
             </div>
         </div>
     </header>
@@ -131,13 +127,14 @@
                 <input type="text" id="out-unit-divisor" style="width: 3em;" />
             </div>
 
-            <p>Result: <span id="out-value"></span></p>
+            <p><span id="out-value"></span></p>
 
             <datalist id="substance-list">
                 <option value="estradiol"></option>
                 <option value="testosterone"></option>
             </datalist>
 
+            <!-- TODO: move this script more downward, so dark theme loads faster -->
             <script type="text/javascript" src="/scripts/unit-converter.js">
             </script>
         </main>
