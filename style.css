@@ -209,8 +209,10 @@ strong {
     font-weight: 650;
 }
 
-ul, ol {
+ul {
     list-style: none;
+}
+ul, ol {
     margin: 0.3em 0 0.3em 1.5em;
 }
 ul > li, ol > li {
@@ -219,28 +221,14 @@ ul > li, ol > li {
 ul > li::marker {
     content: '-\a0';
 }
-ol.exercises {
-    counter-reset: list;
-}
-ol.exercises > li {
-    counter-increment: list;
-}
-ol.exercises > li::marker {
-    content: '(' counter(list) ')\a0';
-}
-ol.subexercises {
-    counter-reset: list;
-}
-ol.subexercises > li {
-    counter-increment: list;
-}
-ol.subexercises > li::marker {
-    content: '(' counter(list, lower-alpha) ')\a0';
-}
 
 td, th {
     text-align: left;
     padding: 10px 20px 10px 0;
+}
+
+img {
+    max-width: 100%;
 }
 
 .no-display {
@@ -249,20 +237,23 @@ td, th {
 
 /* math stuff */
 
-table.compact-table {
+figure.inline-table table {
     border-collapse: collapse;
     border-style: hidden;
 }
-table.compact-table td, table.compact-table th {
+figure.inline-table table td, figure.inline-table table th {
     vertical-align: middle;
     padding: 0.5em;
     border-width: 1px;
     border-style: solid;
 }
-body.light-mode table.compact-table td, body.light-mode table.compact-table th {
+figure.inline-table {
+    overflow-x: auto;
+}
+body.light-mode figure.inline-table td, body.light-mode figure.inline-table th {
     border-color: var(--light-mode-primary-color);
 }
-body.dark-mode table.compact-table td, body.dark-mode table.compact-table th {
+body.dark-mode figure.inline-table td, body.dark-mode figure.inline-table th {
     border-color: #DDD;
 }
 

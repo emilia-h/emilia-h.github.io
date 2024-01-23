@@ -43,7 +43,7 @@ def generate_file(input_lines: str, template_lines: str):
     return output
 
 def main():
-    template_file = open('./template.html')
+    template_file = open('./template.html', encoding='utf8')
     template_lines = template_file.readlines()
     template_file.close()
 
@@ -55,14 +55,14 @@ def main():
 
             print('START ' + dirpath + '/' + file)
 
-            input_file = open(dirpath + '/' + file)
+            input_file = open(dirpath + '/' + file, encoding='utf8')
             input_lines = input_file.readlines()
             input_file.close()
 
             output = generate_file(input_lines, template_lines)
 
-            output_file = open('../' + dirpath + '/' + file, 'w')
-            output_file.write(output)
+            output_file = open('../' + dirpath + '/' + file, 'w', encoding='utf8')
+            output_file.write(output,)
             output_file.close()
 
             print('END   ' + dirpath + '/' + file)

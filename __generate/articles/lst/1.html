@@ -9,7 +9,7 @@
 
 <p>Take a look at the following statement:</p>
 
-<p><em>if it's not raining tomorrow then I'll go for a walk and I'll get ice cream.</em></p>
+<p><em>If it's not raining tomorrow then I'll go for a walk and I'll get ice cream.</em></p>
 
 <p>
     This statement has a couple of what we will call <strong>propositions</strong>, which are things that can either be
@@ -42,7 +42,7 @@
 <ul>
     <li>\( r \) to denote that it is raining tomorrow</li>
     <li>\( w \) to denote that I'll go for a walk</li>
-    <li>\( c \) to denote that I'll get ice cream</li>
+    <li>\( i \) to denote that I'll get ice cream</li>
     <li>\( \lnot \) for "not ..."</li>
     <li>\( \Rightarrow \) for "if ... then ..."</li>
     <li>\( \land \) for "... and ..."</li>
@@ -50,9 +50,9 @@
 
 <p>Now we could write down the statement as follows, where the parentheses help to read the formula:</p>
 
-<p>\( (\lnot r) \Rightarrow (w \land c) \)</p>
+<p>\( (\lnot r) \Rightarrow (w \land i) \)</p>
 
-<h2 id="truth-tables-and-symbols"><a href="#truth-tables-and-symbols">Truth Tables and Symbols</a></h2>
+<h2 id="truth-tables"><a href="#truth-tables">Truth Tables</a></h2>
 
 <p>
     A propositional variable such as \( w \) can be either <em>true</em> (written as 1, meaning I am actually going for
@@ -61,33 +61,80 @@
 </p>
 
 <p>
-    A boolean operator combines these boolean values into new boolean values, which is written in a
-    <strong>truth table</strong>. For instance for \( a \land b \) (pronounced "\( a \) <strong>and</strong> \( b \)"),
-    the truth table is:
+    A boolean <strong>operator</strong> combines these boolean values into new boolean values, which is written in a
+    <strong>truth table</strong>. For all possible combinations, it tells you if the formula is true or false.
 </p>
 
-<table class="compact-table">
+<p>
+    Let's look at the first and also hardest operator \( \Rightarrow \). The formula \( a \Rightarrow b \), pronounced
+    "\( a \) <strong>implies</strong> \( b \)", can be seen as a promise: if \( a \) is true, then we have to fulfill
+    \( b \). For example, the statement <em>"if it's sunny, I will buy you ice cream"</em>, can be viewed on a
+    case-by-case basis:
+</p>
+
+<figure class="inline-table"><table style="min-width: 20em;">
+    <tr>
+        <th>\( a \)</th>
+        <th>\( b \)</th>
+        <th>\( a \Rightarrow b \)</th>
+    </tr>
+    <tr>
+        <td>🌧 not sunny</td>
+        <td>no ice cream</td>
+        <td>✅ (it wasn't sunny so you didn't break your promise)
+        </td>
+    </tr>
+    <tr>
+        <td>🌧 not sunny</td>
+        <td>🍦 ice cream</td>
+        <td>✅ (you did not say anything about this case, but I'm glad you still got me ice cream)
+        </td>
+    </tr>
+    <tr>
+        <td>🌞 sunny</td>
+        <td>no ice cream</td>
+        <td>🚫 (you said in this case we would get ice cream, but we didn't...)
+        </td>
+    </tr>
+    <tr>
+        <td>🌞 sunny</td>
+        <td>🍦 ice cream</td>
+        <td>✅ (promise fulfilled)</td>
+    </tr>
+</table></figure>
+
+<p>
+    Unfortunately, mathematicians don't work using emojis, so instead we write 0 for false/no and 1 for true/yes. If
+    you know the values for \( a \) and \( b \), then this table tells you the value for \( a \Rightarrow b \):
+</p>
+
+<figure class="inline-table"><table>
+    <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Rightarrow b \)</th></tr>
+    <tr><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td></tr>
+</table></figure>
+
+<p>For \( a \land b \) (pronounced "\( a \) <strong>and</strong> \( b \)"), the truth table is:</p>
+
+<figure class="inline-table"><table>
     <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \land b \)</th></tr>
     <tr><td>0</td><td>0</td><td>0</td></tr>
     <tr><td>0</td><td>1</td><td>0</td></tr>
     <tr><td>1</td><td>0</td><td>0</td></tr>
     <tr><td>1</td><td>1</td><td>1</td></tr>
-</table>
+</table></figure>
 
-<p>
-    If you know the values for \( a \) and \( b \), then this table tells you the value for \( a \land b \). It shows
-    that \( a \land b \) can only be true if both \( a \) is true AND \( b \) is true; otherwise, it is false.
-</p>
+<p>For \( a \lor b \) (pronounced "\( a \) <strong>or</strong> \( b \)") the truth table is:</p>
 
-<p>For \( a \lor b \) (pronounced "a <strong>or</strong> b") the truth table is:</p>
-
-<table class="compact-table">
+<figure class="inline-table"><table>
     <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \lor b \)</th></tr>
     <tr><td>0</td><td>0</td><td>0</td></tr>
     <tr><td>0</td><td>1</td><td>1</td></tr>
     <tr><td>1</td><td>0</td><td>1</td></tr>
     <tr><td>1</td><td>1</td><td>1</td></tr>
-</table>
+</table></figure>
 
 <p>
     Now an interesting question arises: if I say <em>"we can go to the mall or we can order from home"</em>, does that
@@ -97,13 +144,13 @@
     to "XOR" or "\( \oplus \)"), which has the following slightly different truth table (compare them!):
 </p>
 
-<table class="compact-table">
+<figure class="inline-table"><table>
     <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \oplus b \)</th></tr>
     <tr><td>0</td><td>0</td><td>0</td></tr>
     <tr><td>0</td><td>1</td><td>1</td></tr>
     <tr><td>1</td><td>0</td><td>1</td></tr>
     <tr><td>1</td><td>1</td><td>0</td></tr>
-</table>
+</table></figure>
 
 <p>
     It will turn out we don't really use the \( \oplus \) operator a lot in logic though. However, it is used a lot in
@@ -112,50 +159,26 @@
 
 <p>The "not" operator, written as \( \lnot \), takes only one boolean input and has a very simple truth table:</p>
 
-<table class="compact-table">
+<figure class="inline-table"><table>
     <tr><th>\( a \)</th><th>\( \lnot a \)</th></tr>
     <tr><td>0</td><td>1</td></tr>
     <tr><td>1</td><td>0</td></tr>
-</table>
+</table></figure>
 
 <p>
-    We also had an "if ... then ..." connective, for which we use the \( \Rightarrow \) operator. \( a \Rightarrow b \)
-    is often pronounced as "\( a \) <strong>implies</strong> \( b \)" or sometimes as "if \( a \) then \( b \)". The
-    truth table is:
+    Finally we have the \( \Leftrightarrow \) operator named <strong>bi-implication</strong>. This is essentially an
+    implication, but in both directions. \( a \Leftrightarrow b \) is often pronounced as "\( a \)
+    <strong>if and only if</strong> \( b \)", often shortened to "\( a \) <strong>iff</strong> \( b \)" (not a typo!),
+    and it has the following truth table (compare with the truth table for \( \Rightarrow \)):
 </p>
 
-<table class="compact-table">
-    <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Rightarrow b \)</th></tr>
-    <tr><td>0</td><td>0</td><td>1</td></tr>
-    <tr><td>0</td><td>1</td><td>1</td></tr>
-    <tr><td>1</td><td>0</td><td>0</td></tr>
-    <tr><td>1</td><td>1</td><td>1</td></tr>
-</table>
-
-<p>
-    Once again an interesting question shows up. If I say, <em>"if it doesn't rain, I will get ice cream"</em>, and
-    then it does rain and I still get ice cream? Does that mean my statement was a lie (it was false)?
-</p>
-
-<p>
-    The answer is that you didn't really <em>say anything</em> about the case where it did rain. So if the proposition
-    on the left is false, the logical formula is going to be true, which is why the truth table is the way it is.
-</p>
-
-<p>
-    If you want to disallow this, there is still an option: you can use the \( \Leftrightarrow \) operator. \( a
-    \Leftrightarrow b \) is often pronounced as "\( a \) <strong>if and only if</strong> \( b \)", often shortened to
-    "\( a \) <strong>iff</strong> \( b \)" (not a typo!), and it has the following truth table (compare with the truth table for
-    \( \Rightarrow \)):
-</p>
-
-<table class="compact-table">
+<figure class="inline-table"><table>
     <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Leftrightarrow b \)</th></tr>
     <tr><td>0</td><td>0</td><td>1</td></tr>
     <tr><td>0</td><td>1</td><td>0</td></tr>
     <tr><td>1</td><td>0</td><td>0</td></tr>
     <tr><td>1</td><td>1</td><td>1</td></tr>
-</table>
+</table></figure>
 
 <p>
     Don't worry if you think you might forget all these operator and truth tables. You will see these so often that
@@ -172,17 +195,17 @@
 <p>
     You can also put more complicated formulas in a truth table. For instance, we can write out the truth table for the
     example above, with extra columns in between to show the intermediate steps (for <strong>subformulas</strong>
-    \( \lnot r \) and \( w \land c\)):
+    \( \lnot r \) and \( w \land i\)):
 </p>
 
-<table class="compact-table">
+<figure class="inline-table"><table>
     <tr>
         <th>\( r \)</th>
         <th>\( w \)</th>
         <th>\( c \)</th>
         <th>\( \lnot r \)</th>
-        <th>\( w \land c \)</th>
-        <th>\( (\lnot r) \Rightarrow (w \land c) \)</th>
+        <th>\( w \land i \)</th>
+        <th>\( (\lnot r) \Rightarrow (w \land i) \)</th>
     </tr>
     <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
     <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
@@ -192,7 +215,7 @@
     <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
     <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
     <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
-</table>
+</table></figure>
 
 <p>
     If we have a formula for which each row in the truth table results in a 1, this means that the formula is true no
@@ -203,12 +226,14 @@
 
 <h2 id="exercises"><a href="#exercises">Exercises</a></h2>
 
-<ol class="exercises">
+<ol>
     <li>
         Write out the truth tables for the following formulas. Add columns for the subformulas.
-        <ol class="subexercises">
+        <ol>
             <li>\( a \Rightarrow (b \Rightarrow a) \)</li>
             <li>\( (a \Rightarrow b) \Rightarrow a \)</li>
+            <li>\( (a \land b) \Leftrightarrow (\lnot c) \)</li>
+            <li>\( \lnot (a \lor b) \Rightarrow \lnot a \)</li>
         </ol>
     </li>
 
@@ -225,14 +250,14 @@
 <h2 id="next-lesson"><a href="#next-lesson">Next Lesson</a></h2>
 
 <p>
-    As you can see, the numbers of rows of the truth table grows really fast. For example, if we have 20 variables, we
-    already get 1048576 rows, which is clearly not practical. For this reason, we need better techniques than simply
+    As you can see, the number of rows of the truth table grows really fast. For example, if we have 20 variables, we
+    already get 1&nbsp;048&nbsp;576 rows, which is clearly not practical. For this reason, we need better techniques than simply
     listing all possibilities. This is something for in the next chapter!
 </p>
 
 <p><a href="/articles/lst/2">NEXT LESSON</a></p>
 
-<h2 id="final-notes"><a href="#final-notes">Final notes</a></h2>
+<h2 id="addendum"><a href="#addendum">Addendum</a></h2>
 
 <p>Some final notes and disclaimers:</p>
 
@@ -240,7 +265,7 @@
     <li>
         Notation used by people is often different. Some people use \( \Rightarrow \) and \( \Leftrightarrow \), others
         use the thinner arrows \( \rightarrow \) and \( \leftrightarrow \). Some people write \( \mathit{true} \) for 1
-        and \( \mathit{false} \) for 0. Finally, sometimes a tautology is called a "valid" formula instead.
+        and \( \mathit{false} \) for 0.
     </li>
 
     <li>

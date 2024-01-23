@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
     <script type="text/javascript">
         function getCookie(name) {
             const value = document.cookie.split('; ').find((x) => x.startsWith(name + '='));
@@ -52,64 +53,64 @@
 
             <p>"negation" (not \( a \)):</p>
 
-            <table class="compact-table">
+            <figure class="inline-table"><table>
                 <tr><th>\( a \)</th><th>\( \lnot a \)</th></tr>
                 <tr><td>0</td><td>1</td></tr>
                 <tr><td>1</td><td>0</td></tr>
-            </table>
+            </table></figure>
 
             <p>"and" also known as "conjunction" (\( a \) and \( b \)):</p>
 
-            <table class="compact-table">
+            <figure class="inline-table"><table>
                 <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \land b \)</th></tr>
                 <tr><td>0</td><td>0</td><td>0</td></tr>
                 <tr><td>0</td><td>1</td><td>0</td></tr>
                 <tr><td>1</td><td>0</td><td>0</td></tr>
                 <tr><td>1</td><td>1</td><td>1</td></tr>
-            </table>
+            </table></figure>
 
             <p>"inclusive or" also known as "disjunction" (\( a \) or \( b \)):</p>
 
-            <table class="compact-table">
+            <figure class="inline-table"><table>
                 <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \lor b \)</th></tr>
                 <tr><td>0</td><td>0</td><td>0</td></tr>
                 <tr><td>0</td><td>1</td><td>1</td></tr>
                 <tr><td>1</td><td>0</td><td>1</td></tr>
                 <tr><td>1</td><td>1</td><td>1</td></tr>
-            </table>
+            </table></figure>
 
             <p>"exclusive or" (\( a \) xor \( b \)):</p>
 
-            <table class="compact-table">
+            <figure class="inline-table"><table>
                 <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \oplus b \)</th></tr>
                 <tr><td>0</td><td>0</td><td>0</td></tr>
                 <tr><td>0</td><td>1</td><td>1</td></tr>
                 <tr><td>1</td><td>0</td><td>1</td></tr>
                 <tr><td>1</td><td>1</td><td>0</td></tr>
-            </table>
+            </table></figure>
 
             <p>"implication" (if \( a \), then \( b \)):</p>
 
-            <table class="compact-table">
+            <figure class="inline-table"><table>
                 <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Rightarrow b \)</th></tr>
                 <tr><td>0</td><td>0</td><td>1</td></tr>
                 <tr><td>0</td><td>1</td><td>1</td></tr>
                 <tr><td>1</td><td>0</td><td>0</td></tr>
                 <tr><td>1</td><td>1</td><td>1</td></tr>
-            </table>
+            </table></figure>
 
             <p>"iff" also known as "bi-implication" (if and only if \( a \), then \( b \))</p>
 
-            <table class="compact-table">
+            <figure class="inline-table"><table>
                 <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Leftrightarrow b \)</th></tr>
                 <tr><td>0</td><td>0</td><td>1</td></tr>
                 <tr><td>0</td><td>1</td><td>0</td></tr>
                 <tr><td>1</td><td>0</td><td>0</td></tr>
                 <tr><td>1</td><td>1</td><td>1</td></tr>
-            </table>
+            </table></figure>
 
         </main>
-        <footer>
+        <footer style="overflow-x: hidden;">
             <table id="footer-table"><tbody>
                 <tr>
                     <td><a href="mailto:emilia144@proton.me">emilia144@proton.me</a></td>
@@ -117,7 +118,7 @@
                 </tr>
                 <tr>
                     <td><a href="/about">about</a></td>
-                    <td><a href="https://github.com/emilia-h/emilia-h.github.io">repository for this site</a></td>
+                    <td><a href="https://github.com/emilia-h/emilia-h.github.io">site repo</a></td>
                 </tr>
             </tbody></table>
         </footer>
