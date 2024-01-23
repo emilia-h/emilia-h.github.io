@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Part 1 - Logic and Set Theory - emi-h.com</title>
+
+    <link rel="stylesheet" href="/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript">
+        function getCookie(name) {
+            const value = document.cookie.split('; ').find((x) => x.startsWith(name + '='));
+            return value ? value.split('=')[1] : null;
+        }
+    </script>
+</head>
+
+<body class="light-mode">
+    <header>
+        <div id="header-left">
+            <div class="menu-item">
+                <a href="/">emi-h.com</a>
+            </div>
+        </div>
+        <div id="header-center">
+            <div class="menu-item">
+                <a href="/software">Software Projects</a>
+            </div>
+            <div class="menu-item">
+                <a href="/music">Music</a>
+            </div>
+            <div class="menu-item">
+                <a href="/articles">Articles</a>
+            </div>
+            <div class="menu-item">
+                <a href="/resources">Resources</a>
+            </div>
+            <div class="menu-item">
+                <a href="/tools">Tools</a>
+            </div>
+        </div>
+        <div id="header-right">
+            <div class="menu-item">
+                <a onclick="toggleMode();" style="cursor: pointer;">Toggle theme</a>
+            </div>
+        </div>
+    </header>
+    <div id="lower-body">
+        <main>
+            <h1 id="title"><a href="#title">Part 1: Logical Reasoning & Using Variables</a></h1>
+
+            <h2 id="an-example"><a href="#an-example">An Example</a></h2>
+
+            <p>Take a look at the following statement:</p>
+
+            <p><em>if it's not raining tomorrow then I'll go for a walk and I'll get ice cream.</em></p>
+
+            <p>
+                This statement has a couple of what we will call <strong>propositions</strong>, which are things that can either be
+                true or false:
+            </p>
+
+            <ul>
+                <li>it's raining tomorrow</li>
+                <li>I'll go for a walk</li>
+                <li>I'll get ice cream</li>
+            </ul>
+
+            <p>It also has a few <strong>connectives</strong> that relate these propositions to each other:</p>
+
+            <ul>
+                <li>if ... then ...</li>
+                <li>not ...</li>
+                <li>... and ...</li>
+            </ul>
+
+            <p>
+                Math works the exact same way! For these propositions we can use variables, and for connectives we can use
+                mathematical symbols known as operators.
+            </p>
+
+            <h2 id="propositions-and-connectives"><a href="#propositions-and-connectives">Propositions and Connectives</a></h2>
+
+            <p>Let's replace the propositions with variables, and the connectives with operators:</p>
+
+            <ul>
+                <li>\( r \) to denote that it is raining tomorrow</li>
+                <li>\( w \) to denote that I'll go for a walk</li>
+                <li>\( c \) to denote that I'll get ice cream</li>
+                <li>\( \lnot \) for "not ..."</li>
+                <li>\( \Rightarrow \) for "if ... then ..."</li>
+                <li>\( \land \) for "... and ..."</li>
+            </ul>
+
+            <p>Now we could write down the statement as follows, where the parentheses help to read the formula:</p>
+
+            <p>\( (\lnot r) \Rightarrow (w \land c) \)</p>
+
+            <h2 id="truth-tables-and-symbols"><a href="#truth-tables-and-symbols">Truth Tables and Symbols</a></h2>
+
+            <p>
+                A propositional variable such as \( w \) can be either <em>true</em> (written as 1, meaning I am actually going for
+                a walk) or <em>false</em> (written as 0, meaning I am not going for a walk). These are known as
+                <strong>boolean</strong> values.
+            </p>
+
+            <p>
+                A boolean operator combines these boolean values into new boolean values, which is written in a
+                <strong>truth table</strong>. For instance for \( a \land b \) (pronounced "\( a \) <strong>and</strong> \( b \)"),
+                the truth table is:
+            </p>
+
+            <table class="compact-table">
+                <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \land b \)</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <p>
+                If you know the values for \( a \) and \( b \), then this table tells you the value for \( a \land b \). It shows
+                that \( a \land b \) can only be true if both \( a \) is true AND \( b \) is true; otherwise, it is false.
+            </p>
+
+            <p>For \( a \lor b \) (pronounced "a <strong>or</strong> b") the truth table is:</p>
+
+            <table class="compact-table">
+                <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \lor b \)</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <p>
+                Now an interesting question arises: if I say <em>"we can go to the mall or we can order from home"</em>, does that
+                mean we can also do both? In other words, does the "\( \lor \)" operator include the possibility that both are
+                true? In logic, the answer to this question is <strong>yes</strong>, and the \( \lor \) operator is therefore
+                called "inclusive or". If you don't want this, you can use the so-called "exclusive or" operator (often shortened
+                to "XOR" or "\( \oplus \)"), which has the following slightly different truth table (compare them!):
+            </p>
+
+            <table class="compact-table">
+                <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \oplus b \)</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td></tr>
+                <tr><td>1</td><td>1</td><td>0</td></tr>
+            </table>
+
+            <p>
+                It will turn out we don't really use the \( \oplus \) operator a lot in logic though. However, it is used a lot in
+                computer programming and electronics.
+            </p>
+
+            <p>The "not" operator, written as \( \lnot \), takes only one boolean input and has a very simple truth table:</p>
+
+            <table class="compact-table">
+                <tr><th>\( a \)</th><th>\( \lnot a \)</th></tr>
+                <tr><td>0</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td></tr>
+            </table>
+
+            <p>
+                We also had an "if ... then ..." connective, for which we use the \( \Rightarrow \) operator. \( a \Rightarrow b \)
+                is often pronounced as "\( a \) <strong>implies</strong> \( b \)" or sometimes as "if \( a \) then \( b \)". The
+                truth table is:
+            </p>
+
+            <table class="compact-table">
+                <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Rightarrow b \)</th></tr>
+                <tr><td>0</td><td>0</td><td>1</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <p>
+                Once again an interesting question shows up. If I say, <em>"if it doesn't rain, I will get ice cream"</em>, and
+                then it does rain and I still get ice cream? Does that mean my statement was a lie (it was false)?
+            </p>
+
+            <p>
+                The answer is that you didn't really <em>say anything</em> about the case where it did rain. So if the proposition
+                on the left is false, the logical formula is going to be true, which is why the truth table is the way it is.
+            </p>
+
+            <p>
+                If you want to disallow this, there is still an option: you can use the \( \Leftrightarrow \) operator. \( a
+                \Leftrightarrow b \) is often pronounced as "\( a \) <strong>if and only if</strong> \( b \)", often shortened to
+                "\( a \) <strong>iff</strong> \( b \)" (not a typo!), and it has the following truth table (compare with the truth table for
+                \( \Rightarrow \)):
+            </p>
+
+            <table class="compact-table">
+                <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Leftrightarrow b \)</th></tr>
+                <tr><td>0</td><td>0</td><td>1</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <p>
+                Don't worry if you think you might forget all these operator and truth tables. You will see these so often that
+                you'll remember them soon enough, and I have a
+                <a href="/articles/lst/cheatsheet-logic#boolean-operators" target="_blank">cheatsheet</a> here.
+            </p>
+
+            <img src="/images/lst-icecream-in-rain.png" style="width: 15em;" />
+
+            <p><em>Art by Alice</em></p>
+
+            <h2 id="reasoning-with-truth-tables"><a href="#reasoning-with-truth-tables">Reasoning with Truth Tables</a></h2>
+
+            <p>
+                You can also put more complicated formulas in a truth table. For instance, we can write out the truth table for the
+                example above, with extra columns in between to show the intermediate steps (for <strong>subformulas</strong>
+                \( \lnot r \) and \( w \land c\)):
+            </p>
+
+            <table class="compact-table">
+                <tr>
+                    <th>\( r \)</th>
+                    <th>\( w \)</th>
+                    <th>\( c \)</th>
+                    <th>\( \lnot r \)</th>
+                    <th>\( w \land c \)</th>
+                    <th>\( (\lnot r) \Rightarrow (w \land c) \)</th>
+                </tr>
+                <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <p>
+                If we have a formula for which each row in the truth table results in a 1, this means that the formula is true no
+                matter what input we give it. In this case, the formula is called a <strong>tautology</strong>. In the same way, if
+                each row has a 0 as the result, that means the formula is always false and we call this a
+                <strong>contradiction</strong>.
+            </p>
+
+            <h2 id="exercises"><a href="#exercises">Exercises</a></h2>
+
+            <ol class="exercises">
+                <li>
+                    Write out the truth tables for the following formulas. Add columns for the subformulas.
+                    <ol class="subexercises">
+                        <li>\( a \Rightarrow (b \Rightarrow a) \)</li>
+                        <li>\( (a \Rightarrow b) \Rightarrow a \)</li>
+                    </ol>
+                </li>
+
+                <li>
+                    Which of the formulas in exercise 1 are tautologies? Which are contradictions? This should be easy to see from
+                    the truth tables you made.
+                </li>
+
+                <li>
+                    If you have a truth table with \( n \) different variables, how many rows will it get?
+                </li>
+            </ol>
+
+            <h2 id="next-lesson"><a href="#next-lesson">Next Lesson</a></h2>
+
+            <p>
+                As you can see, the numbers of rows of the truth table grows really fast. For example, if we have 20 variables, we
+                already get 1048576 rows, which is clearly not practical. For this reason, we need better techniques than simply
+                listing all possibilities. This is something for in the next chapter!
+            </p>
+
+            <p><a href="/articles/lst/2">NEXT LESSON</a></p>
+
+            <h2 id="final-notes"><a href="#final-notes">Final notes</a></h2>
+
+            <p>Some final notes and disclaimers:</p>
+
+            <ul>
+                <li>
+                    Notation used by people is often different. Some people use \( \Rightarrow \) and \( \Leftrightarrow \), others
+                    use the thinner arrows \( \rightarrow \) and \( \leftrightarrow \). Some people write \( \mathit{true} \) for 1
+                    and \( \mathit{false} \) for 0. Finally, sometimes a tautology is called a "valid" formula instead.
+                </li>
+
+                <li>
+                    Parentheses are often unnecessary, so \( (\lnot r) \Rightarrow (w \land c) \) could also be written as
+                    \( \lnot r \Rightarrow w \land c \). Just like how in algebra, \( a + b \cdot c \) is \( a + (b \cdot c) \) and
+                    not \( (a + b) \cdot c \), there is an order to read operators in:
+
+                    <ul>
+                        <li>\( \Leftrightarrow \)</li>
+                        <li>\( \Rightarrow \)</li>
+                        <li>\( \land \), \( \lor \), \( \oplus \)</li>
+                        <li>Other mathematical operators such as \( = \), \( \neq \), \( + \), \( \cdot \) etc. in their own order</li>
+                        <li>\( \lnot \)</li>
+                    </ul>
+
+                    However, I advise you write out parentheses most of the time, except maybe with \( \lnot \).
+                </li>
+            </ul>
+
+        </main>
+        <footer>
+            <table id="footer-table"><tbody>
+                <tr>
+                    <td><a href="mailto:emilia144@proton.me">emilia144@proton.me</a></td>
+                    <td><a href="https://github.com/emilia-h">github account</a></td>
+                </tr>
+                <tr>
+                    <td><a href="/about">about</a></td>
+                    <td><a href="https://github.com/emilia-h/emilia-h.github.io">repository for this site</a></td>
+                </tr>
+            </tbody></table>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        let theme = 'light-mode';
+
+        function toggleMode() {
+            document.body.classList.remove(theme);
+            if (theme == 'dark-mode') {
+                theme = 'light-mode';
+            } else if (theme == 'light-mode') {
+                theme = 'dark-mode';
+            }
+            document.body.classList.add(theme);
+            document.cookie = `pref=${theme}; samesite=strict; path=/`;
+        }
+
+        const previousSetting = getCookie('pref');
+        if ((previousSetting && previousSetting !== theme) ||
+            (!previousSetting && window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            toggleMode();
+        }
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

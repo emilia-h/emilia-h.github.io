@@ -4,6 +4,7 @@ import os
 sections = [
     'HEAD',
     'MAIN',
+    'SCRIPT',
 ]
 
 def generate_file(input_lines: str, template_lines: str):

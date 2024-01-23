@@ -1,0 +1,70 @@
+
+#HEAD
+<title>Cheatsheet Logic - emi-h.com</title>
+
+#MAIN
+<h1 id="title"><a href="#title">Cheatsheet Logic</a></h1>
+
+<h2 id="boolean-operators"><a href="#boolean-operators">Boolean operators</a></h2>
+
+<p>"negation" (not \( a \)):</p>
+
+<table class="compact-table">
+    <tr><th>\( a \)</th><th>\( \lnot a \)</th></tr>
+    <tr><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td></tr>
+</table>
+
+<p>"and" also known as "conjunction" (\( a \) and \( b \)):</p>
+
+<table class="compact-table">
+    <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \land b \)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td></tr>
+</table>
+
+<p>"inclusive or" also known as "disjunction" (\( a \) or \( b \)):</p>
+
+<table class="compact-table">
+    <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \lor b \)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td></tr>
+</table>
+
+<p>"exclusive or" (\( a \) xor \( b \)):</p>
+
+<table class="compact-table">
+    <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \oplus b \)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td></tr>
+</table>
+
+<p>"implication" (if \( a \), then \( b \)):</p>
+
+<table class="compact-table">
+    <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Rightarrow b \)</th></tr>
+    <tr><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td></tr>
+</table>
+
+<p>"iff" also known as "bi-implication" (if and only if \( a \), then \( b \))</p>
+
+<table class="compact-table">
+    <tr><th>\( a \)</th><th>\( b \)</th><th>\( a \Leftrightarrow b \)</th></tr>
+    <tr><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td></tr>
+</table>
+
+#SCRIPT
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>

@@ -13,6 +13,13 @@ body {
     flex-flow: column;
 }
 
+:root {
+    --light-mode-primary-color: black;
+    --light-mode-background-color: #DDD;
+    --dark-mode-primary-color: #DDD;
+    --dark-mode-background-color: #111;
+}
+
 /* layout of header */
 
 header {
@@ -85,12 +92,12 @@ footer {
 /* light mode */
 
 body.light-mode {
-    color: black;
+    color: var(--light-mode-primary-color);
     background-color: #111;
 }
 
 body.light-mode main {
-    background-color: #DDD;
+    background-color: var(--light-mode-background-color);
 }
 body.light-mode main a {
     color: #65F;
@@ -120,12 +127,12 @@ body.light-mode footer {
 /* dark mode */
 
 body.dark-mode {
-    color: #DDD;
+    color: var(--dark-mode-primary-color);
     background-color: black;
 }
 
 body.dark-mode main {
-    background-color: #111;
+    background-color: var(--dark-mode-background-color);
 }
 body.dark-mode a {
     color: #98D;
@@ -199,18 +206,36 @@ a:hover {
 }
 
 strong {
-    font-weight: 510;
+    font-weight: 650;
 }
 
-ul {
+ul, ol {
     list-style: none;
-    padding: 6px 0 6px 10px;
+    margin: 0.3em 0 0.3em 1.5em;
 }
-ul > li {
-    padding: 2px 0;
+ul > li, ol > li {
+    margin: 0.15em 0 0 0;
 }
-ul > li::before {
-    content: '- ';
+ul > li::marker {
+    content: '-\a0';
+}
+ol.exercises {
+    counter-reset: list;
+}
+ol.exercises > li {
+    counter-increment: list;
+}
+ol.exercises > li::marker {
+    content: '(' counter(list) ')\a0';
+}
+ol.subexercises {
+    counter-reset: list;
+}
+ol.subexercises > li {
+    counter-increment: list;
+}
+ol.subexercises > li::marker {
+    content: '(' counter(list, lower-alpha) ')\a0';
 }
 
 td, th {
@@ -220,6 +245,25 @@ td, th {
 
 .no-display {
     display: none;
+}
+
+/* math stuff */
+
+table.compact-table {
+    border-collapse: collapse;
+    border-style: hidden;
+}
+table.compact-table td, table.compact-table th {
+    vertical-align: middle;
+    padding: 0.5em;
+    border-width: 1px;
+    border-style: solid;
+}
+body.light-mode table.compact-table td, body.light-mode table.compact-table th {
+    border-color: var(--light-mode-primary-color);
+}
+body.dark-mode table.compact-table td, body.dark-mode table.compact-table th {
+    border-color: #DDD;
 }
 
 /* form inputs */
