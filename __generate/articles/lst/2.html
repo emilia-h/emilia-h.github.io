@@ -3,6 +3,285 @@
 <title>Part 2 - Logic and Set Theory - emi-h.com</title>
 
 #MAIN
-<h1 id="title"><a href="#title">Part 2: ...</a></h1>
+<h1 id="title"><a href="#title">Part 2: Simple Proofs</a></h1>
+
+<h2 id="introduction"><a href="#introduction">Introduction</a></h2>
+
+<p>
+    <a href="/articles/lst/1">Last chapter</a>, we saw how to translate statements in English to formulas, with a
+    variable for each piece of the sentence. We also saw truth tables and what contradictions/tautologies are.
+</p>
+
+<p>
+    In this chapter, we will learn how to <strong>prove</strong> a formula, which means showing that it is a tautology.
+    We could do this by listing all combinations using a truth table, but we saw that these can get enormous, so we
+    need a better method for proving than listing all options. This is why we will use
+    <strong>natural deduction</strong> to prove formulas.
+</p>
+
+<h2 id="assumptions-and-proof-goals"><a href="#assumptions-and-proof-goals">Assumptions and Proof Goals</a></h2>
+
+<p>Suppose we would like to prove that the following complicated-looking formula is a tautology:</p>
+
+<p>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</p>
+
+<p>
+    We will write a proof for this in a structured manner. At the bottom of the proof, we write the
+    <strong>proof goal</strong>. At the top, we write <strong>assumptions</strong>, which are valid only within a
+    certain context. In between, we write intermediate facts that we use to go from assumptions to the prove goal.
+</p>
+
+<p>
+    We start by determining the "top-level" symbol of the formula. In the example, this is \( \Rightarrow \), because
+    we can split up the formula in two subformulas \( (a \Rightarrow b) \land a \) and \( b \), connected with
+    \( \Rightarrow \). The parentheses help to guide us here.
+</p>
+
+<p>
+    Just like we had a <a href="/articles/lst/cheatsheet-logic#boolean-operators" target="_blank">truth table</a> for
+    each symbol, we also have proof rules for each symbol, of the following two types:
+</p>
+
+<ul>
+    <li>
+        <strong>Introduction rules</strong>: these are rules that "build" a bigger formula from smaller facts. In
+        practice, you use these rules when you have a proof goal that you need to work toward, but you don't know yet
+        how to prove it (you work backward from the proof goal).
+    </li>
+    <li>
+        <strong>Elimination rules</strong>: these are rules that "deconstruct" a formula into a smaller formula. In
+        practice, you use these rules for reasoning steps (you work forward from assumptions and existing facts).
+    </li>
+</ul>
+
+<h2 id="rules-for-implication"><a href="#rules-for-implication">Rules for \( \Rightarrow \)</a></h2>
+
+<p>
+    The <strong>introduction rule for \( \Rightarrow \)</strong> says that if you assume the left-hand side \( X \)
+    and manage to prove, using this assumption, that the right-hand side \( Y \) is true, then you may conclude that
+    \( X \Rightarrow Y \) is true. It would be written down as follows:
+</p>
+
+<div class="proof">
+    <div>assume \( X \)</div>
+    <div>&nbsp;</div>
+    <div>    ...</div>
+    <div>&nbsp;</div>
+    <div>    { new proof goal }</div>
+    <div>    \( Y \)</div>
+    <div>&nbsp;</div>
+    <div>{ by introduction rule for \( \Rightarrow \) }</div>
+    <div>\( X \Rightarrow Y \)</div>
+</div>
+
+<p>
+    The extra spacing makes it extra clear where it is allowed to use the assumption, while the lines in {} are
+    comments to explain your steps. You could compare it to writing something like Python code for a program, except
+    this is for a proof.
+</p>
+
+<p>
+    The <strong>elimination rule for \( \Rightarrow \)</strong> says that if you know that an implication
+    \( X \Rightarrow Y \) holds true, and you have proven that the left-hand side \( X \) is true, then you may
+    conclude that the right-hand side \( Y \) holds true. It would be written down as follows:
+</p>
+
+<div class="proof">
+    <div>\( X \Rightarrow Y \)</div>
+    <div>&nbsp;</div>
+    <div>...</div>
+    <div>&nbsp;</div>
+    <div>\( X \)</div>
+    <div>&nbsp;</div>
+    <div>...</div>
+    <div>&nbsp;</div>
+    <div>{ by elimination rule for \( \Rightarrow \) }</div>
+    <div>\( Y \)</div>
+</div>
+
+<p>
+    I intentionally wrote upper-case \( X \) and \( Y \), because they do not have to be variables; they can also be
+    more complex subformulas.
+</p>
+
+<p>
+    Now we can use the introduction rule to prove the example at the start! This is because we were trying to prove
+    something where the top-level symbol was \( \Rightarrow \). This step would be written as follows:
+</p>
+
+<div class="proof">
+    <div>assume \( (a \Rightarrow b) \land a \)</div>
+    <div>&nbsp;</div>
+    <div>    ... still left to do ...</div>
+    <div>&nbsp;</div>
+    <div>    { by what rule? }</div>
+    <div>    \( b \)</div>
+    <div>{ by introduction rule for \( \Rightarrow \) }</div>
+    <div>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</div>
+</div>
+
+<p>
+    We have filled in some of the gaps of our proof, but note that it is not complete yet. We need other rules to
+    finish the proof.
+</p>
+
+<h2 id="rules-for-conjunction"><a href="#rules-for-conjunction">Rules for \( \land \)</a></h2>
+
+<p>
+    The <strong>introduction rule for \( \land \)</strong> is a lot simpler. If you know that \( X \) is true and that
+    \( Y \) is true, then you may conclude that \( X \land Y \) is true:
+</p>
+
+<div class="proof">
+    <div>\( X \)</div>
+    <div>&nbsp;</div>
+    <div>...</div>
+    <div>&nbsp;</div>
+    <div>\( Y \)</div>
+    <div>&nbsp;</div>
+    <div>...</div>
+    <div>&nbsp;</div>
+    <div>{ by introduction rule for \( \land \) }</div>
+    <div>\( X \land Y \)</div>
+</div>
+
+<p>Notice that this introduction rule does not give you an assumption!</p>
+
+<p>
+    The <strong>elimination rules for \( \land \)</strong> (there are 2) are also quite simple. If you know that
+    \( X \land Y \) holds, then you may conclude \( X \):
+</p>
+
+<div class="proof">
+    <div>\( X \land Y \)</div>
+    <div>&nbsp;</div>
+    <div>{ by elimination rule for \( \land \) }</div>
+    <div>\( X \)</div>
+</div>
+
+<p>Similarly, if you know that \( X \land Y \) holds, then you may conclude \( Y \):</p>
+
+<div class="proof">
+    <div>\( X \land Y \)</div>
+    <div>&nbsp;</div>
+    <div>{ by elimination rule for \( \land \) }</div>
+    <div>\( Y \)</div>
+</div>
+
+<h2 id="finishing-the-example-proof"><a href="#finishing-the-example-proof">Finishing the Example Proof</a></h2>
+
+<p>We already had the following part of the proof:</p>
+
+<div class="proof">
+    <div>assume \( (a \Rightarrow b) \land a \)</div>
+    <div>&nbsp;</div>
+    <div>    ... still left to do ...</div>
+    <div>&nbsp;</div>
+    <div>    { by what rule? }</div>
+    <div>    \( b \)</div>
+    <div>{ by introduction rule for \( \Rightarrow \) }</div>
+    <div>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</div>
+</div>
+
+<p>
+    First of all, we can use the elimination rule for \( \land \) <em>twice</em> to continue the proof for our
+    example:
+</p>
+
+<div class="proof">
+    <div>assume \( (a \Rightarrow b) \land a \)</div>
+    <div>    { by elimination rule for \( \land \) }</div>
+    <div>    \( a \Rightarrow b \)</div>
+    <div>    { by elimination rule for \( \land \) }</div>
+    <div>    \( a \)</div>
+    <div>&nbsp;</div>
+    <div>    ... still left to do ...</div>
+    <div>&nbsp;</div>
+    <div>    { by what rule? }</div>
+    <div>    \( b \)</div>
+    <div>{ by introduction rule for \( \Rightarrow \) }</div>
+    <div>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</div>
+</div>
+
+<p>For the last step, we can use the elimination rule for \( \Rightarrow \) to bridge the gap:</p>
+
+<div class="proof">
+    <div>assume \( (a \Rightarrow b) \land a \)</div>
+    <div>    { by elimination rule for \( \land \) }</div>
+    <div>    \( a \Rightarrow b \)</div>
+    <div>    { by elimination rule for \( \land \) }</div>
+    <div>    \( a \)</div>
+    <div>    { by elimination rule for \( \Rightarrow \) }</div>
+    <div>    \( b \)</div>
+    <div>{ by introduction rule for \( \Rightarrow \) }</div>
+    <div>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</div>
+</div>
+
+<h2 id="incorrect-reasoning"><a href="#incorrect-reasoning">Incorrect Reasoning</a></h2>
+
+<p>
+    It is important to remember that assumptions and facts can only be used within the context that they were made,
+    unless there is a specific rule for it. The indentation also helps to make this more obvious. An example of an
+    INCORRECT proof that \( a \Rightarrow b \) is a tautology (which it clearly isn't) would be:
+</p>
+
+<div class="proof">
+    <div>assume \( a \) (1)</div>
+    <div>    assume \( b \) (2)</div>
+    <div>        { from assumption (2) }</div>
+    <div>        \( b \)</div>
+    <div>    { by introduction rule for \( \Rightarrow \) }</div>
+    <div>    \( b \Rightarrow b \)</div>
+    <div>    { from assumption (2) (NOT ALLOWED!) }</div>
+    <div>    \( b \)</div>
+    <div>{ by introduction rule for \( \Rightarrow \) }</div>
+    <div>\( a \Rightarrow b \)</div>
+</div>
+
+<p>
+    We used assumption (2) to prove that \( b \Rightarrow b \), which is completely valid, but we then tried to use
+    that assumption outside of its intended scope, which leads to the incorrect conclusion that \( a \Rightarrow b \)
+    is a tautology.
+</p>
+
+<h2 id="exercises"><a href="#exercises">Exercises</a></h2>
+
+<ol>
+    <li>
+        Prove that the following formulas are tautologies, using natural deduction:
+
+        <ol>
+            <li>\( (a \land b) \Rightarrow a \)</li>
+            <li>\( ((a \Rightarrow b) \land (b \Rightarrow c)) \Rightarrow (a \Rightarrow c) \)</li>
+            <li>\( ((a \land b) \Rightarrow c) \Rightarrow (a \Rightarrow (b \Rightarrow c)) \)</li>
+            <li>\( (a \Rightarrow (b \Rightarrow c)) \Rightarrow ((a \land b) \Rightarrow c) \)</li>
+        </ol>
+    </li>
+
+    <li>
+        For the following formulas, if they are tautologies, prove it; otherwise, give values to \( a \), \( b \) and
+        \( c \) to show that it also can be false (this is called giving a <strong>counterexample</strong>):
+
+        <ol>
+            <li>\( a \Rightarrow (a \land b) \)</li>
+            <li>\( a \Rightarrow (b \Rightarrow a) \)</li>
+            <li>\( (b \Rightarrow a) \Rightarrow a \)</li>
+        </ol>
+    </li>
+</ol>
+
+<h2 id="next-lesson"><a href="#next-lesson">Next Lesson</a></h2>
+
+<p>
+    Although this is just an introduction to proving, these concepts are still the "real deal" and are used in
+    basically every proof made by computer scientists (though they may use different notation or leave out some
+    details). In the next chapter, we're going to look at a few more rules that are needed for the other connectives
+    like \( \lor \), \( \lnot \) and \( \Leftrightarrow \). Make sure to do the exercises before moving on to the next
+    chapter!
+</p>
+
+<p><a href="/articles/lst/3">NEXT LESSON</a></p>
 
 #SCRIPT
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>

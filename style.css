@@ -74,6 +74,7 @@ main {
     padding: 2em 15vw 2em 15vw;
 }
 
+/* https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue */
 footer {
     font-size: 14px;
     padding: 2em 15vw 2em 15vw;
@@ -255,6 +256,20 @@ body.light-mode figure.inline-table td, body.light-mode figure.inline-table th {
 }
 body.dark-mode figure.inline-table td, body.dark-mode figure.inline-table th {
     border-color: #DDD;
+}
+
+div.proof {
+    margin: 0.3em 0 0.3em 0.3em;
+    padding: 0.3em 0 0.3em 1.2em;
+}
+div.proof > div {
+    white-space: pre;
+}
+body.light-mode div.proof {
+    border-left: 1px solid var(--light-mode-primary-color);
+}
+body.dark-mode div.proof {
+    border-left: 1px solid var(--dark-mode-primary-color);
 }
 
 /* form inputs */
