@@ -16,8 +16,10 @@ body {
 :root {
     --light-mode-primary-color: black;
     --light-mode-background-color: #DDD;
+    --light-mode-highlight-color: #65F;
     --dark-mode-primary-color: #DDD;
     --dark-mode-background-color: #111;
+    --dark-mode-highlight-color: #98D;
 }
 
 /* layout of header */
@@ -101,9 +103,16 @@ body.light-mode main {
     background-color: var(--light-mode-background-color);
 }
 body.light-mode main a {
-    color: #65F;
+    color: var(--light-mode-highlight-color);
 }
 body.light-mode main a:hover {
+    color: #68A;
+}
+body.light-mode button {
+    color: var(--light-mode-highlight-color);
+    background-color: var(--light-mode-background-color);
+}
+body.light-mode button:hover {
     color: #68A;
 }
 
@@ -116,7 +125,7 @@ body.light-mode header a {
     color: white;
 }
 body.light-mode header a:hover {
-    color: #98D;
+    color: var(--dark-mode-highlight-color); /* intentional */
     text-decoration: none;
 }
 body.light-mode footer {
@@ -136,9 +145,16 @@ body.dark-mode main {
     background-color: var(--dark-mode-background-color);
 }
 body.dark-mode a {
-    color: #98D;
+    color: var(--dark-mode-highlight-color);
 }
 body.dark-mode main a:hover {
+    color: #68A;
+}
+body.dark-mode button {
+    color: var(--dark-mode-highlight-color);
+    background-color: var(--dark-mode-background-color);
+}
+body.dark-mode button:hover {
     color: #68A;
 }
 
@@ -150,7 +166,7 @@ body.dark-mode header a {
     color: white;
 }
 body.dark-mode header a:hover {
-    color: #98D;
+    color: var(--dark-mode-highlight-color);
     text-decoration: none;
 }
 body.dark-mode footer {
@@ -205,6 +221,15 @@ a {
 a:hover {
     text-decoration: underline;
 }
+button {
+    padding: 0.2em 0.3em;
+    margin: 0 2px;
+    /* border: 1px solid; */
+    border: none;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+}
 
 strong {
     font-weight: 650;
@@ -230,6 +255,7 @@ td, th {
 
 img {
     max-width: 100%;
+    margin: 10px 0;
 }
 
 .no-display {
@@ -310,18 +336,8 @@ body.dark-mode table.proof td:nth-child(2) {
     border-left-color: var(--dark-mode-primary-color);
 }
 
-div.proof {
-    margin: 0.3em 0 0.3em 0.3em;
-    padding: 0.3em 0 0.3em 1.2em;
-}
-div.proof > div {
-    white-space: pre;
-}
-body.light-mode div.proof {
-    border-left: 1px solid var(--light-mode-primary-color);
-}
-body.dark-mode div.proof {
-    border-left: 1px solid var(--dark-mode-primary-color);
+.stepper {
+    margin: 0.6em 0;
 }
 
 /* form inputs */

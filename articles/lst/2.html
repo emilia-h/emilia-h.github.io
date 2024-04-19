@@ -483,6 +483,270 @@
                 </tr>
             </table>
 
+            <h2 id="another-example"><a href="#another-example">Another Example</a></h2>
+
+            <p>
+                Below you can see another example of a proof with these rules, for the proposition
+                \( ((a \land b) \Rightarrow c) \Rightarrow (a \Rightarrow (b \Rightarrow c)) \). Click the buttons under it to see
+                the process.
+            </p>
+
+            <div id="another-example-stepper" class="stepper">
+                <table class="proof">
+                    <tr>
+                        <td></td>
+                        <td>...</td>
+                    </tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>\( ((a \land b) \Rightarrow c) \Rightarrow (a \Rightarrow (b \Rightarrow c)) \)</td>
+                    </tr>
+                </table>
+                <table class="proof">
+                    <tr>
+                        <td>(1)</td>
+                        <td>assume <span class="bgcolor-1">\( (a \land b) \Rightarrow c \)</span></td>
+                    </tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td></td>
+                        <td>    ... still left to do ...</td>
+                    </tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>    <span class="bgcolor-2">\( a \Rightarrow (b \Rightarrow c) \)</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{ by introduction rule for \( \Rightarrow \) on (1) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>\( ( \)<span class="bgcolor-1">\( (a \land b) \Rightarrow c \)</span>\( ) \Rightarrow ( \)<span class="bgcolor-2">\( a \Rightarrow (b \Rightarrow c) \)</span>\( ) \)</td>
+                    </tr>
+                </table>
+                <table class="proof">
+                    <tr>
+                        <td>(1)</td>
+                        <td>assume \( (a \land b) \Rightarrow c \)</td>
+                    </tr>
+                    <tr>
+                        <td>(2)</td>
+                        <td>    assume <span class="bgcolor-1">\( a \)</span></td>
+                    </tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td></td>
+                        <td>        ... still left to do ...</td>
+                    </tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>        <span class="bgcolor-2">\( b \Rightarrow c \)</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>    { by introduction rule for \( \Rightarrow \) on (2) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>    <span class="bgcolor-1">\( a \)</span> \( \Rightarrow ( \)<span class="bgcolor-2">\( b \Rightarrow c \)</span>\( ) \)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{ by introduction rule for \( \Rightarrow \) on (1) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>\( ((a \land b) \Rightarrow c) \Rightarrow (a \Rightarrow (b \Rightarrow c)) \)</td>
+                    </tr>
+                </table>
+                <table class="proof">
+                    <tr>
+                        <td>(1)</td>
+                        <td>assume \( (a \land b) \Rightarrow c \)</td>
+                    </tr>
+                    <tr>
+                        <td>(2)</td>
+                        <td>    assume \( a \)</td>
+                    </tr>
+                    <tr>
+                        <td>(3)</td>
+                        <td>        assume <span class="bgcolor-1">\( b \)</span></td>
+                    </tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td></td>
+                        <td>            ... still left to do ...</td>
+                    </tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>            <span class="bgcolor-2">\( c \)</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>        { by introduction rule for \( \Rightarrow \) on (3) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>        <span class="bgcolor-1">\( b \)</span> \( \Rightarrow \)<span class="bgcolor-2"> \( c \)</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>    { by introduction rule for \( \Rightarrow \) on (2) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>    \( a \Rightarrow (b \Rightarrow c) \)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{ by introduction rule for \( \Rightarrow \) on (1) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>\( ((a \land b) \Rightarrow c) \Rightarrow (a \Rightarrow (b \Rightarrow c)) \)</td>
+                    </tr>
+                </table>
+                <table class="proof">
+                    <tr>
+                        <td>(1)</td>
+                        <td>assume \( (a \land b) \Rightarrow c \)</td>
+                    </tr>
+                    <tr>
+                        <td>(2)</td>
+                        <td>    assume <span class="bgcolor-1">\( a \)</span></td>
+                    </tr>
+                    <tr>
+                        <td>(3)</td>
+                        <td>        assume <span class="bgcolor-2">\( b \)</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>            { by introduction rule for \( \land \) on (2) and (3) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>            <span class="bgcolor-1">\( a \)</span> \( \land \) <span class="bgcolor-2">\( b \)</span></td>
+                    </tr>
+                    <tr><td></td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>            \( c \)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>        { by introduction rule for \( \Rightarrow \) on (3) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>        \( b \Rightarrow c \)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>    { by introduction rule for \( \Rightarrow \) on (2) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>    \( a \Rightarrow (b \Rightarrow c) \)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{ by introduction rule for \( \Rightarrow \) on (1) and (?) }</td>
+                    </tr>
+                    <tr>
+                        <td>(?)</td>
+                        <td>\( ((a \land b) \Rightarrow c) \Rightarrow (a \Rightarrow (b \Rightarrow c)) \)</td>
+                    </tr>
+                </table>
+                <table class="proof">
+                    <tr>
+                        <td>(1)</td>
+                        <td>assume \( ( \)<span class="bgcolor-1">\( a \land b \)</span>\( ) \Rightarrow c \)</td>
+                    </tr>
+                    <tr>
+                        <td>(2)</td>
+                        <td>    assume \( a \)</td>
+                    </tr>
+                    <tr>
+                        <td>(3)</td>
+                        <td>        assume \( b \)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>            { by introduction rule for \( \land \) on (2) and (3) }</td>
+                    </tr>
+                    <tr>
+                        <td>(4)</td>
+                        <td>            <span class="bgcolor-1">\( a \land b \)</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>            { by elimination rule for \( \Rightarrow \) on (1) and (4) }</td>
+                    </tr>
+                    <tr>
+                        <td>(5)</td>
+                        <td>            <span class="bgcolor-2">\( c \)</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>        { by introduction rule for \( \Rightarrow \) on (3) and (5) }</td>
+                    </tr>
+                    <tr>
+                        <td>(6)</td>
+                        <td>        \( b \Rightarrow c \)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>    { by introduction rule for \( \Rightarrow \) on (2) and (6) }</td>
+                    </tr>
+                    <tr>
+                        <td>(7)</td>
+                        <td>    \( a \Rightarrow (b \Rightarrow c) \)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{ by introduction rule for \( \Rightarrow \) on (1) and (7) }</td>
+                    </tr>
+                    <tr>
+                        <td>(8)</td>
+                        <td>\( ((a \land b) \Rightarrow c) \Rightarrow (a \Rightarrow (b \Rightarrow c)) \)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p>
+                <button class="stepper-previous" data-target="another-example-stepper">previous</button>
+                <span class="stepper-counter" data-target="another-example-stepper"></span>
+                <button class="stepper-next" data-target="another-example-stepper">next</button>
+            </p>
+
+            <img src="/images/lst-operator-tv.png" style="width: 20em;" />
+
+            <p><em>Art by Alex, <a target="_blank" href="https://mastodon.art/@averza">@averza on Mastodon (opens new tab)</a></em></p>
+
             <h2 id="incorrect-reasoning"><a href="#incorrect-reasoning">Incorrect Reasoning</a></h2>
 
             <p>
@@ -549,8 +813,8 @@
                     <ol>
                         <li>\( (a \land b) \Rightarrow a \)</li>
                         <li>\( ((a \Rightarrow b) \land (b \Rightarrow c)) \Rightarrow (a \Rightarrow c) \)</li>
-                        <li>\( ((a \land b) \Rightarrow c) \Rightarrow (a \Rightarrow (b \Rightarrow c)) \)</li>
                         <li>\( (a \Rightarrow (b \Rightarrow c)) \Rightarrow ((a \land b) \Rightarrow c) \)</li>
+                        <li>\( ((a \Rightarrow b) \land (a \Rightarrow c)) \Rightarrow (a \Rightarrow (b \land c)) \)</li>
                     </ol>
                 </li>
 
@@ -615,6 +879,7 @@
             toggleMode();
         }
     </script>
+    <script src="/scripts/elements.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
 </body>
