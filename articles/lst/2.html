@@ -71,8 +71,9 @@
 
             <p>
                 We will write a proof for this in a structured manner. At the bottom of the proof, we write the
-                <strong>proof goal</strong>. At the top, we write <strong>assumptions</strong>, which are valid only within a
-                certain context. In between, we write intermediate facts that we use to go from assumptions to the prove goal.
+                <strong>proof goal</strong>, which is what we will try to prove. At the top, we write <strong>assumptions</strong>,
+                which you <em>do not</em> have to prove, but which are valid only within a certain context. In between, we write
+                intermediate facts that we use to go from the assumptions to the proof goal.
             </p>
 
             <p>
@@ -101,22 +102,48 @@
             <h2 id="rules-for-implication"><a href="#rules-for-implication">Rules for \( \Rightarrow \)</a></h2>
 
             <p>
-                The <strong>introduction rule for \( \Rightarrow \)</strong> says that if you assume the left-hand side \( X \)
-                and manage to prove, using this assumption, that the right-hand side \( Y \) is true, then you may conclude that
-                \( X \Rightarrow Y \) is true. It would be written down as follows:
+                The <strong>introduction rule for \( \Rightarrow \)</strong> says that if you assume the left-hand side \( X \) and
+                manage to prove, using this assumption, that the right-hand side \( Y \) is true, then you may conclude that
+                \( X \Rightarrow Y \) is true. It would be written down as follows in your proof:
             </p>
 
-            <div class="proof">
-                <div>assume \( X \)</div>
-                <div>&nbsp;</div>
-                <div>    ...</div>
-                <div>&nbsp;</div>
-                <div>    { new proof goal }</div>
-                <div>    \( Y \)</div>
-                <div>&nbsp;</div>
-                <div>{ by introduction rule for \( \Rightarrow \) }</div>
-                <div>\( X \Rightarrow Y \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>assume \( X \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                <tr>
+                    <td></td>
+                    <td>    ...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { new proof goal }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    \( Y \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \Rightarrow \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( X \Rightarrow Y \)</td>
+                </tr>
+            </table>
 
             <p>
                 The extra spacing makes it extra clear where it is allowed to use the assumption, while the lines in {} are
@@ -130,18 +157,48 @@
                 conclude that the right-hand side \( Y \) holds true. It would be written down as follows:
             </p>
 
-            <div class="proof">
-                <div>\( X \Rightarrow Y \)</div>
-                <div>&nbsp;</div>
-                <div>...</div>
-                <div>&nbsp;</div>
-                <div>\( X \)</div>
-                <div>&nbsp;</div>
-                <div>...</div>
-                <div>&nbsp;</div>
-                <div>{ by elimination rule for \( \Rightarrow \) }</div>
-                <div>\( Y \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>\( X \Rightarrow Y \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( X \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by elimination rule for \( \Rightarrow \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( Y \)</td>
+                </tr>
+            </table>
 
             <p>
                 I intentionally wrote upper-case \( X \) and \( Y \), because they do not have to be variables; they can also be
@@ -153,41 +210,95 @@
                 something where the top-level symbol was \( \Rightarrow \). This step would be written as follows:
             </p>
 
-            <div class="proof">
-                <div>assume \( (a \Rightarrow b) \land a \)</div>
-                <div>&nbsp;</div>
-                <div>    ... still left to do ...</div>
-                <div>&nbsp;</div>
-                <div>    { by what rule? }</div>
-                <div>    \( b \)</div>
-                <div>{ by introduction rule for \( \Rightarrow \) }</div>
-                <div>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td>(1)</td>
+                    <td>assume <span class="bgcolor-1">\( (a \Rightarrow b) \land a \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    ... still left to do ...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { ? }</td>
+                </tr>
+                <tr>
+                    <td>(?)</td>
+                    <td>    <span class="bgcolor-2">\( b \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \Rightarrow \) on (1) and (?) }</td>
+                </tr>
+                <tr>
+                    <td>(?)</td>
+                    <td>\( ( \)<span class="bgcolor-1">\( (a \Rightarrow b) \land a \)</span>\( ) \Rightarrow \) <span class="bgcolor-2">\( b \)</span></td>
+                </tr>
+            </table>
 
             <p>
-                We have filled in some of the gaps of our proof, but note that it is not complete yet. We need other rules to
-                finish the proof.
+                We also added line numbers to make it easier for a reader to understand what is going on. We have filled in some of
+                the gaps of our proof, but note that it is not complete yet. We need other rules to finish the proof.
             </p>
 
             <h2 id="rules-for-conjunction"><a href="#rules-for-conjunction">Rules for \( \land \)</a></h2>
 
             <p>
-                The <strong>introduction rule for \( \land \)</strong> is a lot simpler. If you know that \( X \) is true and that
+                The <strong>introduction rule for \( \land \)</strong> is a bit simpler. If you know that \( X \) is true and that
                 \( Y \) is true, then you may conclude that \( X \land Y \) is true:
             </p>
 
-            <div class="proof">
-                <div>\( X \)</div>
-                <div>&nbsp;</div>
-                <div>...</div>
-                <div>&nbsp;</div>
-                <div>\( Y \)</div>
-                <div>&nbsp;</div>
-                <div>...</div>
-                <div>&nbsp;</div>
-                <div>{ by introduction rule for \( \land \) }</div>
-                <div>\( X \land Y \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>\( X \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( Y \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \land \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( X \land Y \)</td>
+                </tr>
+            </table>
 
             <p>Notice that this introduction rule does not give you an assumption!</p>
 
@@ -196,70 +307,181 @@
                 \( X \land Y \) holds, then you may conclude \( X \):
             </p>
 
-            <div class="proof">
-                <div>\( X \land Y \)</div>
-                <div>&nbsp;</div>
-                <div>{ by elimination rule for \( \land \) }</div>
-                <div>\( X \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>\( X \land Y \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by elimination rule for \( \land \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( X \)</td>
+                </tr>
+            </table>
 
-            <p>Similarly, if you know that \( X \land Y \) holds, then you may conclude \( Y \):</p>
+            <p>In the same way, if you know that \( X \land Y \) holds, then you may conclude \( Y \):</p>
 
-            <div class="proof">
-                <div>\( X \land Y \)</div>
-                <div>&nbsp;</div>
-                <div>{ by elimination rule for \( \land \) }</div>
-                <div>\( Y \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>\( X \land Y \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by elimination rule for \( \land \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( Y \)</td>
+                </tr>
+            </table>
 
             <h2 id="finishing-the-example-proof"><a href="#finishing-the-example-proof">Finishing the Example Proof</a></h2>
 
             <p>We already had the following part of the proof:</p>
 
-            <div class="proof">
-                <div>assume \( (a \Rightarrow b) \land a \)</div>
-                <div>&nbsp;</div>
-                <div>    ... still left to do ...</div>
-                <div>&nbsp;</div>
-                <div>    { by what rule? }</div>
-                <div>    \( b \)</div>
-                <div>{ by introduction rule for \( \Rightarrow \) }</div>
-                <div>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td>(1)</td>
+                    <td>assume \( (a \Rightarrow b) \land a \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    ... still left to do ...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { by what rule? }</td>
+                </tr>
+                <tr>
+                    <td>(?)</td>
+                    <td>    \( b \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \Rightarrow \) on (1) and (?) }</td>
+                </tr>
+                <tr>
+                    <td>(?)</td>
+                    <td>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</td>
+                </tr>
+            </table>
 
             <p>
                 First of all, we can use the elimination rule for \( \land \) <em>twice</em> to continue the proof for our
                 example:
             </p>
 
-            <div class="proof">
-                <div>assume \( (a \Rightarrow b) \land a \)</div>
-                <div>    { by elimination rule for \( \land \) }</div>
-                <div>    \( a \Rightarrow b \)</div>
-                <div>    { by elimination rule for \( \land \) }</div>
-                <div>    \( a \)</div>
-                <div>&nbsp;</div>
-                <div>    ... still left to do ...</div>
-                <div>&nbsp;</div>
-                <div>    { by what rule? }</div>
-                <div>    \( b \)</div>
-                <div>{ by introduction rule for \( \Rightarrow \) }</div>
-                <div>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td>(1)</td>
+                    <td>assume \( ( \)<span class="bgcolor-1">\( a \Rightarrow b \)</span>\( ) \land \) <span class="bgcolor-2">\( a \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { by elimination rule for \( \land \) on (1) }</td>
+                </tr>
+                <tr>
+                    <td>(2)</td>
+                    <td>    <span class="bgcolor-1">\( a \Rightarrow b \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { by elimination rule for \( \land \) on (1) }</td>
+                </tr>
+                <tr>
+                    <td>(3)</td>
+                    <td>    <span class="bgcolor-2">\( a \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    ... still left to do ...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { by what rule? }</td>
+                </tr>
+                <tr>
+                    <td>(?)</td>
+                    <td>    \( b \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \Rightarrow \) on (1) and (?) }</td>
+                </tr>
+                <tr>
+                    <td>(?)</td>
+                    <td>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</td>
+                </tr>
+            </table>
 
             <p>For the last step, we can use the elimination rule for \( \Rightarrow \) to bridge the gap:</p>
 
-            <div class="proof">
-                <div>assume \( (a \Rightarrow b) \land a \)</div>
-                <div>    { by elimination rule for \( \land \) }</div>
-                <div>    \( a \Rightarrow b \)</div>
-                <div>    { by elimination rule for \( \land \) }</div>
-                <div>    \( a \)</div>
-                <div>    { by elimination rule for \( \Rightarrow \) }</div>
-                <div>    \( b \)</div>
-                <div>{ by introduction rule for \( \Rightarrow \) }</div>
-                <div>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td>(1)</td>
+                    <td>assume \( (a \Rightarrow b) \land a \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { by elimination rule for \( \land \) on (1) }</td>
+                </tr>
+                <tr>
+                    <td>(2)</td>
+                    <td>    <span class="bgcolor-1">\( a \)</span> \( \Rightarrow \) <span class="bgcolor-2">\( b \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { by elimination rule for \( \land \) on (1) }</td>
+                </tr>
+                <tr>
+                    <td>(3)</td>
+                    <td>    <span class="bgcolor-1">\( a \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { by elimination rule for \( \Rightarrow \) on (2) and (3) }</td>
+                </tr>
+                <tr>
+                    <td>(4)</td>
+                    <td>    <span class="bgcolor-2">\( b \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \Rightarrow \) } on (1) and (4)</td>
+                </tr>
+                <tr>
+                    <td>(5)</td>
+                    <td>\( ((a \Rightarrow b) \land a) \Rightarrow b \)</td>
+                </tr>
+            </table>
 
             <h2 id="incorrect-reasoning"><a href="#incorrect-reasoning">Incorrect Reasoning</a></h2>
 
@@ -269,18 +491,48 @@
                 INCORRECT proof that \( a \Rightarrow b \) is a tautology (which it clearly isn't) would be:
             </p>
 
-            <div class="proof">
-                <div>assume \( a \) (1)</div>
-                <div>    assume \( b \) (2)</div>
-                <div>        { from assumption (2) }</div>
-                <div>        \( b \)</div>
-                <div>    { by introduction rule for \( \Rightarrow \) }</div>
-                <div>    \( b \Rightarrow b \)</div>
-                <div>    { from assumption (2) (NOT ALLOWED!) }</div>
-                <div>    \( b \)</div>
-                <div>{ by introduction rule for \( \Rightarrow \) }</div>
-                <div>\( a \Rightarrow b \)</div>
-            </div>
+            <table class="proof">
+                <tr>
+                    <td>(1)</td>
+                    <td>assume \( a \)</td>
+                </tr>
+                <tr>
+                    <td>(2)</td>
+                    <td>    assume <span class="bgcolor-wrong">\( b \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>        { from assumption (2) }</td>
+                </tr>
+                <tr>
+                    <td>(3)</td>
+                    <td>        \( b \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    { by introduction rule for \( \Rightarrow \) on (2) and (3) }</td>
+                </tr>
+                <tr>
+                    <td>(4)</td>
+                    <td>    \( b \Rightarrow b \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    <span class="bgcolor-wrong">{ from assumption (2) (NOT ALLOWED!) }</span></td>
+                </tr>
+                <tr>
+                    <td>(5)</td>
+                    <td>    <span class="bgcolor-wrong">\( b \)</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \Rightarrow \) }</td>
+                </tr>
+                <tr>
+                    <td>(6)</td>
+                    <td>\( a \Rightarrow b \)</td>
+                </tr>
+            </table>
 
             <p>
                 We used assumption (2) to prove that \( b \Rightarrow b \), which is completely valid, but we then tried to use

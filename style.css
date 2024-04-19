@@ -236,6 +236,35 @@ img {
     display: none;
 }
 
+.bgcolor-1, .bgcolor-2, .bgcolor-3 {
+    /* little bit of a hack for LaTeX text that displays out of bounds */
+    padding-right: 2px;
+}
+body.light-mode .bgcolor-1 {
+    background-color: #7BD3EA;
+}
+body.light-mode .bgcolor-2 {
+    background-color: #FFCF81;
+}
+body.light-mode .bgcolor-3 {
+    background-color: #E0AED0;
+}
+body.light-mode .bgcolor-wrong {
+    background-color: #FF9944;
+}
+body.dark-mode .bgcolor-1 {
+    background-color: #332266;
+}
+body.dark-mode .bgcolor-2 {
+    background-color: #114422;
+}
+body.dark-mode .bgcolor-3 {
+    background-color: #663322;
+}
+body.dark-mode .bgcolor-wrong {
+    background-color: #441111;
+}
+
 /* math stuff */
 
 figure.inline-table table {
@@ -255,7 +284,30 @@ body.light-mode figure.inline-table td, body.light-mode figure.inline-table th {
     border-color: var(--light-mode-primary-color);
 }
 body.dark-mode figure.inline-table td, body.dark-mode figure.inline-table th {
-    border-color: #DDD;
+    border-color: var(--dark-mode-primary-color);
+}
+
+table.proof {
+    margin: 0.6em 0 0.6em 1.2em;
+}
+table.proof, table.proof td {
+    border-collapse: collapse;
+}
+table.proof td:nth-child(1) {
+    margin: 0;
+    padding: 0 0.4em 0 0;
+}
+table.proof td:nth-child(2) {
+    padding: 0 0 0 1.2em;
+    border-width: 0 0 0 1px;
+    border-style: solid;
+    white-space: pre;
+}
+body.light-mode table.proof td:nth-child(2) {
+    border-left-color: var(--light-mode-primary-color);
+}
+body.dark-mode table.proof td:nth-child(2) {
+    border-left-color: var(--dark-mode-primary-color);
 }
 
 div.proof {
