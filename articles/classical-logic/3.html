@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Part 3 - Classical Logic - emi-h.com</title>
+
+    <link rel="stylesheet" href="/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <script type="text/javascript">
+        function getCookie(name) {
+            const value = document.cookie.split('; ').find((x) => x.startsWith(name + '='));
+            return value ? value.split('=')[1] : null;
+        }
+    </script>
+</head>
+
+<body class="light-mode">
+    <header>
+        <div id="header-left">
+            <div class="menu-item">
+                <a href="/">emi-h.com</a>
+            </div>
+        </div>
+        <div id="header-center">
+            <div class="menu-item">
+                <a href="/software">Software Projects</a>
+            </div>
+            <div class="menu-item">
+                <a href="/music">Music</a>
+            </div>
+            <div class="menu-item">
+                <a href="/articles">Articles</a>
+            </div>
+            <div class="menu-item">
+                <a href="/resources">Resources</a>
+            </div>
+            <div class="menu-item">
+                <a href="/tools">Tools</a>
+            </div>
+        </div>
+        <div id="header-right">
+            <div class="menu-item">
+                <a onclick="toggleMode();" style="cursor: pointer;">Toggle theme</a>
+            </div>
+        </div>
+    </header>
+    <div id="lower-body">
+        <main>
+            <h1 id="title"><a href="#title">Part 3: Proofs with Contradictions</a></h1>
+
+            <h2 id="introduction"><a href="#introduction">Introduction</a></h2>
+
+            <p>
+                <a href="/articles/classical-logic/2">Last chapter</a>, we saw how to prove that something is a tautology, and we
+                learnt how to do natural deduction with the \( \Rightarrow \) and \( \land \) operators. We still have a few other
+                operators to learn though, and it turns out we need to reason about <emph>contradictions</emph> (statements that
+                are always false, as opposed to a tautology which is always true).
+            </p>
+
+            <h2 id="the-true-and-false-symbols"><a href="#the-true-and-false-symbols">The True and False Symbols</a></h2>
+
+            <p>
+                The <strong>\( \textit{true} \)</strong> symbol denotes a proposition that is, well, always true. Proving that it
+                holds is very simple, because you don't have to do anything! On the other hand, the
+                <strong>\( \textit{false} \)</strong> symbol denotes a proposition that cannot possibly be true, which is to say, a
+                contradiction. Their truth tables are very straightforward, because there are no variables involved:
+            </p>
+
+            <figure class="inline-table"><table>
+                <tr><th>&nbsp;</th><th>\( \textit{true} \)</th></tr>
+                <tr><td>&nbsp;</td><td>1</td></tr>
+            </table></figure>
+
+            <br />
+
+            <figure class="inline-table"><table>
+                <tr><th>&nbsp;</th><th>\( \textit{false} \)</th></tr>
+                <tr><td>&nbsp;</td><td>0</td></tr>
+            </table></figure>
+
+            <p>
+                How can we ever prove \( \textit{false} \) if it cannot possibly be true? Well, we can never prove it just by
+                itself (without making additional assumptions). However, we can use it in a
+                <strong>proof by contradiction</strong>, where you assume something that might not be true, and then prove that
+                this would lead to \( \textit{false} \). In the real world, this could look like the following (somewhat
+                questionable) argument:
+            </p>
+
+            <p>"If ice cream was healthy, everyone would be eating it all the time, so it must not be healthy."</p>
+
+            <p>
+                Here we first <em>assume</em> for the sake of argument that it is healthy. Then we use that assumption to derive a
+                contradiction; namely, everyone would be eating it all the time, which contradicts with the (questionable)
+                premise that people rarely eat it. From this, we conclude that the opposite of the assumption must have been true,
+                so it is not healthy.
+            </p>
+
+            <p>
+                The \( \textit{true} \) and \( \textit{false} \) symbols have introduction and elimination rules that are
+                relatively straightforward. The <strong>introduction rule for \( \textit{true} \)</strong> is trivial because it
+                does not have any conditions:
+            </p>
+
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \textit{true} \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( \textit{true} \)</td>
+                </tr>
+            </table>
+
+            <p>
+                The <strong>elimination rule for \( \textit{false} \)</strong> says that, if you know that both something itself
+                and its negation hold, then you can conclude \( \textit{false} \):
+            </p>
+
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>\( X \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( \lnot X \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \textit{false} \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( \textit{false} \)</td>
+                </tr>
+            </table>
+
+            <p>
+                Finally there is the <strong>elimination rule for \( \textit{false} \)</strong>, which says that once you've found
+                a contradiction, you can conclude anything after that.
+            </p>
+
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>\( \textit{false} \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by elimination rule for \( \textit{false} \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( X \)</td>
+                </tr>
+            </table>
+
+            <h2 id="rules-for-negation"><a id="#rules-for-negation">Rules for \( \lnot \)</a></h2>
+
+            <p>
+                To prove a negation \( \lnot X \), we use the reasoning principle from the ice cream example from before. We assume
+                the positive form \( X \) and then derive a contradiction \( \textit{false} \). The rule looks as follows:
+            </p>
+
+            <table class="proof">
+                <tr>
+                    <td></td>
+                    <td>assume \( X \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    ...</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>    \( \textit{false} \)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{ by introduction rule for \( \lnot \) }</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>\( \lnot X \)</td>
+                </tr>
+            </table>
+
+            <p>TODO</p>
+
+        </main>
+        <footer>
+            <div class="footer-table-wrapper"><table id="footer-table"><tbody>
+                <tr>
+                    <td><a href="mailto:emilia144@proton.me">emilia144@proton.me</a></td>
+                    <td><a href="https://github.com/emilia-h">github</a></td>
+                </tr>
+                <tr>
+                    <td><a href="/about">about</a></td>
+                    <td><a href="https://github.com/emilia-h/emilia-h.github.io">site repo</a></td>
+                </tr>
+            </tbody></table></div>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        let theme = 'light-mode';
+
+        function toggleMode() {
+            document.body.classList.remove(theme);
+            if (theme == 'dark-mode') {
+                theme = 'light-mode';
+            } else if (theme == 'light-mode') {
+                theme = 'dark-mode';
+            }
+            document.body.classList.add(theme);
+            document.cookie = `pref=${theme}; samesite=strict; path=/`;
+        }
+
+        const previousSetting = getCookie('pref');
+        if ((previousSetting && previousSetting !== theme) ||
+            (!previousSetting && window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            toggleMode();
+        }
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
