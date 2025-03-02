@@ -134,6 +134,13 @@ body.light-mode footer {
     border-color: gray;
 }
 
+body.light-mode .dark-mode-only {
+    display: none;
+}
+body.light-mode .light-mode-only {
+    display: unset;
+}
+
 /* dark mode */
 
 body.dark-mode {
@@ -173,6 +180,13 @@ body.dark-mode footer {
     border-color: #333;
     color: #999;
     background-color: black;
+}
+
+body.dark-mode .dark-mode-only {
+    display: unset;
+}
+body.dark-mode .light-mode-only {
+    display: none;
 }
 
 /* generic styling */
