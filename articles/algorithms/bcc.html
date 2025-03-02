@@ -85,8 +85,8 @@
 
             <p><em>
                 Example metro network 1: nodes in the \( A \) set are marked with an A, nodes in the \( B \) set are marked with a
-                B; an example valid pair of locations would be \( (3, 1) \), because no matter which edge Eve chooses to sabogate,
-                there is still a path from \( 3 \) to \( 1 \).
+                B; an example valid pair of locations would be \( (3, 1) \), because no matter which metro line Eve chooses to
+                sabogate, there is still a path from \( 3 \) to \( 1 \).
             </em></p>
 
             <p>
@@ -96,17 +96,14 @@
             </p>
 
             <p>
-                <strong>Definition:</strong> two nodes \( a, b \) are <em>edge-biconnected</em> if there exist two edge-disjoint
-                paths from \( a \) to \( b \), i.e., two paths that do not share any edges.
+                <strong>Definition:</strong> two nodes \( a, b \) are <em>edge-biconnected</em> if for any edge \( e \), there
+                exists a path from \( a \) to \( b \) that does not go through \( e \).
             </p>
 
             <p>
-                For instance, in the example there are two edge-disjoint paths from node 3 to 1: one that goes from 3 directly to
-                1, and one that goes from 3 through 6 to 1. However, there are no two edge-disjoint paths from node 2 to 5: any
-                path must go through the same edge \( \{ 4, 8 \} \), so we cannot choose two paths to be fully edge-disjoint.
                 Then in this problem we are trying to count the number of pairs \( (a, b) \) with \( a \in A \) and \( b \in B \)
-                that are edge-biconnected. After all, if we have such edge-disjoint paths, then even if Eve sabotages an edge on
-                one path, we can always still pick the other path.
+                that are edge-biconnected. After all, no matter what edge Eve sabotages, we always still have a path between the
+                two nodes.
             </p>
 
             <p>
@@ -136,55 +133,55 @@
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-1.svg" />
-                    <p>If Eve sabotages this edge: all nodes can reach all nodes</p>
+                    <p><em>If Eve sabotages this edge: all nodes can reach all nodes</em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-2.svg" />
-                    <p>If Eve sabotages this edge: all nodes can reach all nodes</p>
+                    <p><em>If Eve sabotages this edge: all nodes can reach all nodes</em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-3.svg" />
-                    <p>If Eve sabotages this edge: remove pairs starting with 2 ending with 1/4/5/8</p>
+                    <p><em>If Eve sabotages this edge: remove pairs starting with 2 ending with 1/4/5/8</em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-4.svg" />
-                    <p>If Eve sabotages this edge: all nodes can reach all nodes</p>
+                    <p><em>If Eve sabotages this edge: all nodes can reach all nodes</em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-5.svg" />
-                    <p>If Eve sabotages this edge: all nodes can reach all nodes</p>
+                    <p><em>If Eve sabotages this edge: all nodes can reach all nodes</em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-6.svg" />
-                    <p>If Eve sabotages this edge: all nodes can reach all nodes</p>
+                    <p><em>If Eve sabotages this edge: all nodes can reach all nodes</em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-7.svg" />
-                    <p>
+                    <p><em>
                         If Eve sabotages this edge: remove pairs starting with 2/3/4 ending with 5/8, and pairs starting with 7/8
                         ending with 1/4
-                    </p>
+                    </em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-8.svg" />
-                    <p>If Eve sabotages this edge: all nodes can reach all nodes</p>
+                    <p><em>If Eve sabotages this edge: all nodes can reach all nodes</em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-9.svg" />
-                    <p>If Eve sabotages this edge: all nodes can reach all nodes</p>
+                    <p><em>If Eve sabotages this edge: all nodes can reach all nodes</em></p>
                 </div>
 
                 <div>
                     <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-10.svg" />
-                    <p>If Eve sabotages this edge: all nodes can reach all nodes</p>
+                    <p><em>If Eve sabotages this edge: all nodes can reach all nodes</em></p>
                 </div>
             </div>
 
@@ -202,6 +199,140 @@
                 In this example, we are definitely doing a lot of unnecessary work, and you might also notice that the final set of
                 pairs has a specific pattern to it (whitespace to make this a bit more obvious). First of all, for each pair there
                 exist two edge-disjoint paths like discussed from the A node to the B node:
+            </p>
+
+            <p>We can (suggestively) draw the pairs in the graph as follows:</p>
+
+            <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-all-pairs.svg" />
+
+            <p>
+                Notice that we just have a few clusters of nodes, and within each cluster every possible pair is interconnected (a
+                clustering like this is called a <em>partition</em> of the nodes). Can we prove that we can always find such a
+                clustering/partition? Or could it be that in some graph, there is an edge-biconnected pair \( x, y \), an
+                edge-biconnected pair \( y, z \), but not an edge-biconnected pair \( x, z \)? (Think about counterexamples, or
+                convince yourself this should always hold.)
+            </p>
+
+            <h2 id="edge-biconnected-components"><a href="#edge-biconnected-components">Edge-Biconnected Components</a></h2>
+
+            <p>
+                Okay, I am kind of giving it away by naming this section like this. But it is a very doable exercise to prove that
+                such a partition is always possible, where within each cluster all the pairs are connected through a pair of
+                edge-disjoint paths, and between two distinct clusters, there are no pairs connected in that way. When thinking
+                about partitions, you should always think about the mathematical concept of an <em>equivalence relation</em>. If
+                edge-biconnectedness were an equivalence relation, we would need to prove the following three properties:
+            </p>
+
+            <ul>
+                <li>Reflexivity: any node \( u \) is edge-biconnected to itself.</li>
+                <li>Symmetry: if \( u \) is edge-biconnected to \( v \), then \( v \) must be edge-biconnected to \( u \).</li>
+                <li>
+                    Transitivity: if \( u \) is edge-biconnected to \( v \) and \( v \) is edge-biconnected to \( w \), then \( u \)
+                    must be edge-biconnected to \( w \).
+                </li>
+            </ul>
+
+            <p>
+                It turns out that edge-biconnectedness is in fact an equivalence relation. The proofs for these properties are
+                definitely doable to do for yourself! (Try this! Or look at the proof for the first property and then try the other
+                two yourself. For transitivity, you have consider that the two assumed paths can be overlapping.) Regardless, I
+                will give the proof here, together with a "proof by picture":
+            </p>
+
+            <ul>
+                <li>
+                    Reflexivity: let \( u \) be any node. Obviously no matter what edge we remove, we still have a path from
+                    \( u \) going to itself, namely the empty path. Therefore, \( u \) is edge-biconnected to \( u \).
+                </li>
+                <li>
+                    Symmetry: let \( u \) and \( v \) be any nodes, assume that \( u \) is edge-biconnected to \( v \), and let
+                    \( e \) be any edge that we must not use. Because \( u \) was edge-biconnected to \( v \), we can choose
+                    \( p \) to be the path from \( u \) to \( v \) that does not use \( e \). Because this path lives in an
+                    undirected graph, we can reverse the path to get a path from \( v \) to \( u \) that still does not use
+                    \( e \). Therefore, \( v \) is edge-biconnected to \( u \).
+                </li>
+                <li>
+                    Transitivity: let \( u \), \( v \) and \( w \) be any nodes, assume that \( u \) is edge-biconnected to
+                    \( v \) and that \( v \) is edge-biconnected to \( w \), and let \( e \) be any edge that we must not use.
+                    Because \( u \) was edge-biconnected to \( v \), we can choose \( p \) to be the path from \( u \) to \( v \)
+                    that does not use \( e \). Because \( v \) was edge-biconnected to \( w \), we can choose \( q \) to be the
+                    path from \( v \) to \( w \). If \( p \) and \( q \) do not overlap in any edges, simply concatenate to get a
+                    path \( p q \) from \( u \) to \( w \). If they do however overlap at some point, take the subpath \( p' \) of
+                    \( p \) from \( u \) to the earliest point where the overlap, take the subpath \( q' \) of \( q \) from that
+                    point to \( w \), and concatenate to get a path \( p' q' \) from \( u \) to \( w \) that does not use \( e \)
+                    and does not overlap with itself. Therefore in either case, \( v \) is edge-biconnected to \( w \). (See
+                    figure.)
+                </li>
+            </ul>
+
+            <div id="transitivity-stepper" class="stepper">
+                <div>
+                    <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-3.svg" />
+                    <p><em>Example for transitivity proof: \( e \) marks the sabotaged edge</em></p>
+                </div>
+
+                <div>
+                    <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-3-uv.svg" />
+                    <p><em>Example for transitivity proof: path from \( u \) to \( v \)</em></p>
+                </div>
+
+                <div>
+                    <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-3-vw.svg" />
+                    <p><em>Example for transitivity proof: path from \( v \) to \( w \)</em></p>
+                </div>
+
+                <div>
+                    <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-3-overlapping.svg" />
+                    <p><em>Example for transitivity proof: red marks the first overlapping node of the two paths</em></p>
+                </div>
+
+                <div>
+                    <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-3-uw.svg" />
+                    <p><em>Example for transitivity proof: concatenated path from \( u \) to \( w \)</em></p>
+                </div>
+            </div>
+
+            <p>
+                <button class="stepper-previous" data-target="transitivity-stepper">previous</button>
+                <span class="stepper-counter" data-target="transitivity-stepper"></span>
+                <button class="stepper-next" data-target="transitivity-stepper">next</button>
+            </p>
+
+            <p>
+                This gives us a new algorithm for our problem. First compute the edge-biconnected components for the entire graph.
+                Then within each component count how many \( A \) nodes and how many \( B \) nodes there are. Because within a
+                component each pair of nodes is edge-biconnected, we can simply multiply the A count by the B count and add this
+                value to the result. Between any two different components there are no edge-biconnected pairs, we are not missing
+                any pairs. Now all we need is an algorithm for computing edge-biconnected components!
+            </p>
+
+            <h2 id="edge-biconnected-component-algorithm"><a href="#edge-biconnected-component-algorithm">Edge-Biconnected Component Algorithm</a></h2>
+
+            <p>
+                As could be seen in the example of our connected-component-based algorithm, there are certain edges that, when
+                removed, will split up the graph into more connected components. These edges are called <em>bridges</em>. If we can
+                find the bridges of the graph, then finding the edge-biconnected components will be very easy, because they are
+                simply the connected components of the graph with all bridges removed. We can show this by proving the fact that
+                two nodes are edge-biconnected if and only if they are in the same connected component of the graph with all
+                bridges removed (you can safely skip it, but see the <a href="#proof1">appendix</a> for the proof).
+            </p>
+
+            <p>
+                The algorithm for finding bridges was invented by famous computer scientist Robert Tarjan and only uses depth-first
+                search. (Fun fact: Tarjan's brother James was a
+                <a href="https://en.wikipedia.org/wiki/James_Tarjan">chess grandmaster</a>.) TODO
+            </p>
+
+            <h2 id="edge-disjoint-paths"><a href="#edge-disjoint-paths">Bonus: Edge-Disjoint Paths</a></h3>
+
+            <p>
+                Another way to state the edge-biconnectedness property is that there exist two edge-disjoint paths from \( a \) to
+                \( b \), i.e., paths that do not have any of the same edges. For instance, in the example there are two
+                edge-disjoint paths from node 3 to 1: one that goes from 3 directly to 1, and one that goes from 3 through 6 to 1.
+                However, there are no two edge-disjoint paths from node 2 to 5: any path must go through the same edge
+                \( \{ 4, 8 \} \), so we cannot choose two paths to be fully edge-disjoint. The proof that this is a property that
+                holds if and only if the nodes are edge-biconnected is not trivial. You can see the picture for an example that we
+                have two edge-disjoint paths for each edge-biconnected pair, but not for any other pairs:
             </p>
 
             <div id="pairs-stepper" class="stepper">
@@ -247,55 +378,13 @@
                 <button class="stepper-next" data-target="pairs-stepper">next</button>
             </p>
 
-            <p>We can (suggestively) draw the pairs in the graph as follows:</p>
-
-            <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-all-pairs.svg" />
-
             <p>
-                Notice that we just have a few clusters of nodes, and within each cluster every possible pair is interconnected (a
-                clustering like this is called a <em>partition</em> of the nodes). Can we prove that we can always find such a
-                clustering/partition? Or could it be that in some graph, there is an edge-biconnected pair \( x, y \), an
-                edge-biconnected pair \( y, z \), but not an edge-biconnected pair \( x, z \)? (Think about counterexamples, or
-                convince yourself this should always hold.)
+                Also note that in an undirected graph, we can see two edge-disjoint paths from \( a \) to \( b \) as an
+                <em>edge walk</em> that goes from \( a \) to \( b \) and then back to \( a \) again, without repeating any edges.
+                This is kind of like a cycle going through \( a \) and \( b \), except we may go over the same node several times.
             </p>
 
-            <h2 id="edge-biconnected-components"><a href="#edge-biconnected-components">Edge-Biconnected Components</a></h2>
-
-            <p>
-                Okay, I am kind of giving it away by naming this section like this. But it is a very doable exercise to prove that
-                such a partition is always possible, where within each cluster all the pairs are connected through a pair of
-                edge-disjoint paths, and between two distinct clusters, there are no pairs connected in that way. When thinking
-                about partitions, you should always think about the mathematical concept of an <em>equivalence relation</em>. If
-                edge-biconnectedness were an equivalence relation, we would need to prove the following three properties:
-            </p>
-
-            <ul>
-                <li>Reflexive: any node \( u \) is edge-biconnected to itself</li>
-                <li>Symmetric: if \( u \) is edge-biconnected to \( v \), then \( v \) must be edge-biconnected to \( u \)</li>
-                <li>
-                    Transitive: if \( u \) is edge-biconnected to \( v \) and \( v \) is edge-biconnected to \( w \), then \( u \)
-                    must be edge-biconnected to \( w \)
-                </li>
-            </ul>
-
-            <p>
-                It turns out that edge-biconnectedness is in fact an equivalence relation, and the proofs for these properties are
-                definitely doable to do for yourself. This gives us a new algorithm for our problem. First compute the
-                edge-biconnected components for the entire graph. Then within each component count how many \( A \) nodes and how
-                many \( B \) nodes there are. Because within a component each pair of nodes is edge-biconnected, we can simply
-                multiply the A count by the B count and add this value to the result. Between any two different components there
-                are no edge-biconnected pairs, we are not missing any pairs.
-            </p>
-
-            <p>
-                Now all we need is an algorithm for computing edge-biconnected components!
-            </p>
-
-            <h2 id="edge-biconnected-component-algorithm"><a href="#edge-biconnected-component-algorithm">Edge-Biconnected Component Algorithm</a></h2>
-
-            TODO
-
-            <h2 id="vertex-biconnected-components"><a href="vertex-biconnected-components">Vertex-Biconnected Components</a></h2>
+            <h2 id="vertex-biconnected-components"><a href="vertex-biconnected-components">Bonus 2: Vertex-Biconnected Components</a></h2>
 
             <p>
                 We can repeat the problem that we stated before but change one thing: what if after you picking a station for Alice
@@ -313,10 +402,10 @@
                 relation on the vertices, and vertex-biconnectedness induces an equivalence relation on the edges).
             </p>
 
-            <h2 id="terminology-index"><a href="#terminology-index">Terminology Index</a></h2>
+            <h2 id="terminology-index"><a href="#terminology-index">Appendix: List of Relevant Terms</a></h2>
 
             <p>
-                Here is a list of terminology:
+                Here is a list of terms used in the theory for edge-biconnectedness and vertex-biconnectedness:
             </p>
 
             <ul>
@@ -355,7 +444,41 @@
                 </li>
                 <li>
                     <em>Articulation point</em>: a node is an articulation point if it is part of more than one vertex-biconnected
-                    components.
+                    component.
+                </li>
+            </ul>
+
+            <h2 id="proof1"><a href="#proof1">Appendix: Proof of Connection between Edge-Biconnectedness and Bridges</a></h2>
+
+            <p>
+                For convenience, define \( G' \) to be \( G \) with all bridges removed. Let \( u \) and \( v \) be arbitrary
+                nodes.
+            </p>
+
+            <ul>
+                <li>
+                    Assume \( u \) and \( v \) are edge-biconnected. For a contradiction, assume \( u \) and \( v \) are not in the
+                    same connected component of \( G' \), i.e., all paths from \( u \) to \( v \) go through some bridge. Since
+                    edge-biconnectedness implies connectedness, there must exist at least one path \( p \) between them, and choose
+                    \( e \) to be a bridge that this path goes through. From edge-biconnectedness, we can instead choose a path
+                    \( q \) that does not use the edge \( e \). Choose \( C \) to be the first connected component of \( G' \) that
+                    \( q \) passes through and that \( p \) also goes through, and that is not just the connected component that
+                    \( u \) lies in (we know such a connected component must exist, because \( p \) and \( q \) at least meet in
+                    the component of \( v \) in \( G' \), and that component is separate from the component of \( u \) because we
+                    passed through the bridge \( e \)). We can join up these paths \( p \) and \( q \) in that connected component
+                    through edges that are not bridges. Now we have a cycle passing through a bridge, which is a contradiction
+                    because it implies that both endpoints of the bridge are in the same connected component even if \( e \) was
+                    removed.
+                </li>
+                <li>
+                    Assume \( u \) and \( v \) are in the same connected component of \( G' \). To prove their
+                    edge-biconnectedness, let \( e \) be any edge. If \( e \) is a bridge or lies outside of the connected
+                    component of \( u \) and \( v \), then trivially there exists a path from \( u \) to \( v \) that does not use
+                    \( e \). Otherwise, \( e \) must not be a bridge and that means that removing it from \( G \) does not change
+                    the connected components, i.e., \( u \) and \( v \) would still lie in the same connected component in
+                    \( G - e \). This means there exists a path from \( u \) to \( v \) in \( G - e \) and thus there exists a path
+                    in \( G \) that does not use \( e \) going from \( u \) to \( v \). Either way, we have a path from \( u \) to
+                    \( v \), proving that \( u \) is edge-biconnected to \( v \).
                 </li>
             </ul>
 
