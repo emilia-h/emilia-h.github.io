@@ -1,0 +1,50 @@
+
+#TITLE
+<title>Syntax Highlighter - emi-h.com</title>
+
+#MAIN
+<label style="display: block;" for="code-input">Enter code:</label>
+
+<textarea
+    name="code-input"
+    id="code-input"
+    rows="20"
+    cols="50"
+    class="monospace"
+    style="display: block;"
+>
+    Enter code
+</textarea>
+
+<label for="language-input">Choose language:</label>
+
+<select name="language-input" id="language-input" style="display: block;">
+    <option value="coq">Coq</option>
+</select>
+
+<button onclick="highlight();" style="display: block;">Convert</button>
+
+<textarea
+    name="code-output"
+    id="code-output"
+    rows="20"
+    cols="50"
+    class="monospace"
+    style="display: block;"
+>
+    Output...
+</textarea>
+
+#SCRIPT
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/coq.min.js"></script>
+
+<script>
+    function highlight() {
+        const codeInput = document.getElementById('code-input').value;
+        const language = document.getElementById('language-input').value;
+        const codeOutput = document.getElementById('code-output');
+        codeOutput.textContent = hljs.highlight(codeInput, { language }).value;
+    }
+</script>

@@ -2,8 +2,6 @@
 
 <html>
 <head>
-    <title>About - emi-h.com</title>
-
     <link rel="stylesheet" href="/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8" />
@@ -47,34 +45,37 @@
     </header>
     <div id="lower-body">
         <main>
-            <h2 id="title"><a href="#title">About</a></h2>
+            <label style="display: block;" for="code-input">Enter code:</label>
 
-            <p>I am a computer science student and this website is where I place my personal projects and ramblings.</p>
+            <textarea
+                name="code-input"
+                id="code-input"
+                rows="20"
+                cols="50"
+                class="monospace"
+                style="display: block;"
+            >
+                Enter code
+            </textarea>
 
-            <p>
-                I believe in simple web design, so this whole website is written using only HTML and CSS and a little bit of
-                JavaScript sprinkled in. To prevent copy-pasting and duplication, I run a straightforward Python script that takes a
-                <code>template.html</code> file and a page file and combines them.
-            </p>
+            <label for="language-input">Choose language:</label>
 
-            <p>
-                Right now I am hosting a domain at a registrar and hosting the static website using GitHub Pages. The source for
-                this website and the generator code I use
-                <a href="https://github.com/emilia-h/emilia-h.github.io">can be viewed on GitHub</a>.
-            </p>
+            <select name="language-input" id="language-input" style="display: block;">
+                <option value="coq">Coq</option>
+            </select>
 
-            <p>
-                The following JavaScript libraries are used (only on the pages where they are necessary) on the client side:
-            </p>
+            <button onclick="highlight();" style="display: block;">Convert</button>
 
-            <ul>
-                <li>For rendering LaTeX: <a href="https://www.mathjax.org/">MathJax</a></li>
-                <li>
-                    For syntax highlighting: <a href="https://highlightjs.org/">highlight-js</a> (although I do not load this
-                    library on pages where you see syntax, I just use <a href="/tools/syntax-highligher">my own tool</a> and then
-                    paste the resulting HTML directly on the web page).
-                </li>
-            </ul>
+            <textarea
+                name="code-output"
+                id="code-output"
+                rows="20"
+                cols="50"
+                class="monospace"
+                style="display: block;"
+            >
+                Output...
+            </textarea>
 
         </main>
         <footer>
@@ -111,6 +112,18 @@
             window.matchMedia('(prefers-color-scheme: dark)').matches)
         ) {
             toggleMode();
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/coq.min.js"></script>
+
+    <script>
+        function highlight() {
+            const codeInput = document.getElementById('code-input').value;
+            const language = document.getElementById('language-input').value;
+            const codeOutput = document.getElementById('code-output');
+            codeOutput.textContent = hljs.highlight(codeInput, { language }).value;
         }
     </script>
 </body>

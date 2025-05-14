@@ -27,14 +27,19 @@ def generate_file(input_lines: str, template_lines: str):
     for template_line in template_lines:
         found = False
         for section in sections:
+            in_pre = 0
             if ('$' + section) in template_line:
                 found = True
                 indentation = template_line[0 : template_line.find('$' + section)].count(' ')
                 for line in section_map[section]:
-                    if line == '\n':
+                    if '<pre>' in line:
+                        in_pre += 1
+                    if line == '\n' or in_pre > 0:
                         output += line
                     else:
                         output += (indentation * ' ') + line
+                    if '</pre>' in line:
+                        in_pre -= 1
                 break
 
         if not found:

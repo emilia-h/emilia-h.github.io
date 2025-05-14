@@ -226,7 +226,7 @@ h1 > a:hover::before, h2 > a:hover::before, h3 > a:hover::before, h4 > a:hover::
 }
 
 p {
-    padding: 8px 0;
+    padding: 0.5em 0;
 }
 
 a {
@@ -274,6 +274,16 @@ img {
 
 .no-display {
     display: none;
+}
+
+.monospace {
+    font-family: consolas, monospace, 'Courier New', Courier;
+}
+code {
+    font-family: consolas, monospace, 'Courier New', Courier;
+}
+code > pre {
+    padding: 1em 0;
 }
 
 .bgcolor-1, .bgcolor-2, .bgcolor-3 {
@@ -354,6 +364,27 @@ body.dark-mode table.proof td:nth-child(2) {
     margin: 0.6em 0;
 }
 
+/* syntax stuff */
+
+body.dark-mode .hljs-keyword {
+    color: #569CD6;
+}
+body.dark-mode .hljs-built_in {
+    color: #EEEEBB;
+}
+body.dark-mode .hljs-type {
+    color: #FFCCCC;
+}
+body.dark-mode .hljs-literal, .hljs-number, .lhjs-string {
+    color: #FF6666;
+}
+body.dark-mode .hljs-punctuation {
+    color: #DDDDDD;
+}
+.hljs-comment {
+    color: #608840;
+}
+
 /* form inputs */
 
 .input-element {
@@ -380,25 +411,25 @@ input[type='radio']:checked {
     border: 3px solid #65F;
 }
 
-input[type='text'] {
+input[type='text'], textarea {
     padding: 0.2em;
     font: inherit;
     border: 1px;
 }
-body.dark-mode input[type='text'] {
+body.dark-mode input[type='text'], body.dark-mode textarea {
     color: white;
     background-color: #333;
     background-image: none;
 }
-body.dark-mode input[type='text']:focus {
+body.dark-mode input[type='text']:focus, body.dark-mode textarea:focus {
     outline: 0;
     box-shadow: inset 0 0 6px #65F;
 }
-body.light-mode input[type='text'] {
+body.light-mode input[type='text'], body.light-mode textarea {
     color: black;
     background-color: #CCC;
 }
-body.light-mode input[type='text']:focus {
+body.light-mode input[type='text']:focus, body.light-mode textarea:focus {
     outline: 0;
     box-shadow: inset 0 0 6px #65F;
 }
