@@ -366,7 +366,7 @@ body.dark-mode table.proof td:nth-child(2) {
 
 /* syntax stuff */
 
-body.dark-mode .hljs-keyword {
+.hljs-keyword {
     color: #569CD6;
 }
 body.dark-mode .hljs-built_in {
@@ -375,7 +375,7 @@ body.dark-mode .hljs-built_in {
 body.dark-mode .hljs-type {
     color: #FFCCCC;
 }
-body.dark-mode .hljs-literal, .hljs-number, .lhjs-string {
+.hljs-literal, .hljs-number, .lhjs-string {
     color: #FF6666;
 }
 body.dark-mode .hljs-punctuation {

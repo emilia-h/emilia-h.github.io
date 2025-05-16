@@ -51,18 +51,18 @@
 
             <p>
                 We explore a trick that can be used in the Rocq proof assistant (formerly known as Coq) for dependent pattern
-                matching and dependent destruction without Axiom K.
+                matching and dependent destruction without any axioms.
             </p>
 
             <p>
                 Sometimes when defining a function in Rocq, there are situations where we want to use dependent pattern matching
                 instead of the normal primitive pattern matching. In particular, a situation that I come across a lot is a
-                <code>Fixpoint</code> definition with well-founded recursion (as opposed to structural recursion), where the proof
-                that the  has to be embedded in the definition of the function.
+                <code>Fixpoint</code> definition with well-founded recursion (as opposed to structural recursion), where a proof
+                (namely that the arguments of the recursive call are smaller) has to be embedded in the definition of the function.
             </p>
 
 <code><pre>
-  <span class="hljs-keyword">Fixpoint</span> recursive_function (param : t1) (acc : Acc <span class="hljs-keyword">R</span> param) : t2 :=
+  <span class="hljs-keyword">Fixpoint</span> recursive_function (param : t1) (acc : Acc R param) : t2 :=
     <span class="hljs-keyword">match</span> (f param) <span class="hljs-keyword">as</span> matchee <span class="hljs-keyword">return</span> f param = matchee&#x27; -&gt; <span class="hljs-keyword">_</span> <span class="hljs-keyword">with</span>
     | <span class="hljs-type">constructor1</span> args =&gt; <span class="hljs-keyword">fun</span> equal =&gt;
       recursive_function (g args) (Acc_inv acc (PROOF HERE))
@@ -83,13 +83,13 @@
 
             <p>
                 There is also an
-                <a href="/articles/formal-proving/dependent-destruction-without-axioms-interactive/plain.v.html">interactive web version</a>
-                available, which I recommend you open on the side if you want to check the details of a proof. The
+                <a href="/articles/dependent-destruction-without-axioms-interactive/plain.v.html">interactive web version</a>
+                of this article available, which I recommend you open on the side if you want to check the details of a proof. The
                 <a href="https://github.com/emilia-h/emilia-h.github.io/blob/main/code/dependent-destruction-without-axioms.v">unprocessed code</a>
                 is also available.
             </p>
 
-            <h2 id="example"><a href="#example">Example</a></h2>
+            <h2 id="the-problem"><a href="#the-problem">The Problem</a></h2>
 
             <p>
                 As an example, we try to write a function that tests if something is a power of 2 by repeatedly dividing the number
@@ -142,7 +142,13 @@
   <span class="hljs-keyword">Qed</span>.
 </pre></code>
 
-            <p>Now, ...</p>
+            <p>
+                Now we will try to define the recursive <code>power_of_2</code> function. First we distinguish on two base cases:
+                if <code>x = 0</code>, then it is not a power of 2, and if <code>x = 1</code> it is a power of 2. Otherwise, we use
+                the <code>half</code> function to both (1) check if the number was odd (in which case <code>x</code> is not a power
+                of 2, so we return false) and (2) recurse on half of <code>x</code>. We use <code>refine</code> so that we can
+                leave where the <code>Acc</code> argument is supposed to go, so we can prove <code>y &lt; x</code> interactively.
+            </p>
 
 <code><pre>
   <span class="hljs-keyword">Fixpoint</span> power_of_2 (x : nat) (acc : Acc Nat.lt x) : bool.
@@ -156,17 +162,31 @@
       <span class="hljs-keyword">else</span>
         <span class="hljs-keyword">match</span> half x <span class="hljs-keyword">with</span>
         | <span class="hljs-type">Some</span> y =&gt;
+          <span class="hljs-comment">(* _ needs a term of type y &lt; x *)</span>
           power_of_2 y (Acc_inv acc <span class="hljs-keyword">_</span>)
         | <span class="hljs-type">None</span> =&gt;
           false
         <span class="hljs-keyword">end</span>
     ).
+</pre></code>
+
+            <p>
+                Unfortunately, here we only have the context <code>x : nat, n : x &lt;&gt; 0, n0 : x &lt;&gt; 1, y : nat</code>,
+                and we have to somehow prove that <code>y &lt; x</code>. Considering that we do not have any information about
+                <code>y</code>, this is clearly impossible.
+            </p>
+
+<code><pre>
     <span class="hljs-comment">(* proof that y &lt; x: unprovable *)</span>
   <span class="hljs-keyword">Abort</span>.
 </pre></code>
 
             <p>
-                Stuff...
+                The reason for this unprovable goal is that the fresh variables that appear in a <code>match</code> arm do not
+                normally carry any information about where they came from. We can try to solve this by using a <code>return</code>
+                clause (see the online book by Adam Chlipala
+                <a href="#certified-programming-with-dependent-types-more-dependent-types">[2]</a>
+                for more info on this construct):
             </p>
 
 <code><pre>
@@ -190,7 +210,15 @@
     <span class="hljs-comment">(* proof that y &lt; x *)</span>
     <span class="hljs-built_in">apply</span> half_lt; <span class="hljs-built_in">auto</span>.
   <span class="hljs-keyword">Defined</span>.
-  
+</pre></code>
+
+            <p>
+              This time at least the definition worked, because the modified <code>match</code> clause gave us the hypothesis
+              <code>h' : half x = Some y</code>. However, there is still a major problem when we try to prove a simple correctness
+              lemma.
+            </p>
+
+<code><pre>
   <span class="hljs-keyword">Lemma</span> power_of_2&#x27;_true :
     <span class="hljs-keyword">forall</span> x : nat,
     <span class="hljs-keyword">forall</span> acc : Acc Nat.lt x,
@@ -204,11 +232,46 @@
     <span class="hljs-built_in">destruct</span> (Nat.eq_dec x <span class="hljs-number">1</span>) <span class="hljs-built_in">as</span> [h&#x27;&#x27; | h&#x27;&#x27;].
     - <span class="hljs-built_in">exists</span> <span class="hljs-number">0</span>; <span class="hljs-built_in">auto</span>.
     - <span class="hljs-keyword">Fail</span> <span class="hljs-built_in">destruct</span> (half x).
+</pre></code>
+
+            <p>
+                Here we have the following hypothesis:
+            </p>
+
+<code><pre>
+h :
+  match half x as half' return (half x = half' -> bool) with
+  | Some y =>
+      fun h'0 : half x = Some y =>
+      power_of_2' y (acc y (half_lt x y h' h'0))
+  | None => fun _ : half x = None => false
+  end eq_refl = true
+</pre></code>
+
+            <p>
+                To perform case distinction on the matchee, we tried to do
+                <code><span class="hljs-built_in">destruct</span> (half x)</code>. This failed with an error message of the form
+                "Abstracting over the term ... leads to a term ... which is ill-typed". We can try to use the
+                <code class="hljs-built_in">case_eq</code> tactic instead, but this only postpones the problem until we
+                <code class="hljs-built_in">rewrite</code> the resulting hypothesis:
+            </p>
+
+<code><pre>
       <span class="hljs-built_in">case_eq</span> (half x).
       * <span class="hljs-built_in">intros</span> y is_some.
         <span class="hljs-keyword">Fail</span> <span class="hljs-built_in">rewrite</span> is_some <span class="hljs-built_in">in</span> h.
   <span class="hljs-keyword">Abort</span>.
 </pre></code>
+
+            <p>
+                Perhaps it is possible to use the
+                <code><span class="hljs-built_in">dependent</span> <span class="hljs-built_in">destruction</span></code>
+                <a href="#dependent-destruction">[4]</a> tactic here, but that does use the
+                <a href="https://rocq-prover.org/doc/v8.11/stdlib/Coq.Logic.JMeq.html">JMeq_eq</a>
+                axiom which we were trying to avoid. Instead we will look at a trick/workaround.
+            </p>
+
+            <h2 id="the-trick"><a href="#the-trick">The Trick</a></h2>
 
             <p>
                 Bla bla bla
@@ -299,29 +362,80 @@
   <span class="hljs-keyword">Qed</span>.
 </pre></code>
 
+            <h2 id="some-notes"><a href="#some-notes">Some Notes</a></h2>
+
+            <p>
+                The main downside of this approach is that it only works for a specific inductive type. If we want to make this
+                work for e.g. natural numbers, we would have to make another inductive type <code>dep_nat</code>. Additionally, you
+                have to be able to change the function definition containing the <code>match</code>, which is not always possible.
+            </p>
+
+            <p>
+                There is <a href="https://jamesrwilcox.com/dep-destruct.html">another post on this topic</a> which appears to try
+                to solve the same problem but in a different way. It does not require changing the function definition, but I find
+                it a bit more difficult to understand.
+            </p>
+
+            <p>
+                There is an even simpler solution to all of this: avoid dependent types altogether (at least if they are in
+                <code>Set</code> or <code>Type</code>). However, this is not always possible, for instance when you perform
+                well-founded recursion like in the examples above.
+            </p>
+
+            <p>
+                I'm curious to know if there are better/different solutions to the problem from above, so send me an email or
+                message if you know more.
+            </p>
+
             <h2 id="references"><a href="#references">References and Links</a></h2>
 
             <p id="well-founded-recursion-done-right">
-                [1] Xavier Leroy. Well-founded recursion done right. CoqPL 2024: The Tenth International Workshop on Coq for
+                [1] More information about well-founded recursion using <code>Acc</code>. Citation:
+            </p>
+
+            <p>
+                Xavier Leroy. Well-founded recursion done right. CoqPL 2024: The Tenth International Workshop on Coq for
                 Programming Languages, ACM, Jan 2024, London, United Kingdom. hal-04356563v2
             </p>
+
+            <p id="certified-programming-with-dependent-types-more-dependent-types">
+                [2] The chapter <a href="http://adam.chlipala.net/cpdt/html/Cpdt.MoreDep.html">"More dependent types"</a> with more
+                information about the general <code>match</code> construct. Citation for the book:
+            </p>
+
+            <p>
+                Adam Chlipala. Certified Programming with Dependent Types. URL:
+                <a href="http://adam.chlipala.net/cpdt/html/toc.html">http://adam.chlipala.net/cpdt/html/toc.html</a>
+            </p>
+
+            <p id="untangling-mechanized-proofs">
+                [3] The
+                <a target="_blank" href="/articles/dependent-destruction-without-axioms-interactive/plain.v.html">
+                    interactive web version
+                </a>
+                is made using <a href="https://github.com/cpitclaudel/alectryon">Alectryon</a>. Citation:
+            </p>
+
+            <p>
+                Clément Pit-Claudel. 2020. Untangling mechanized proofs. In Proceedings of the 13th ACM SIGPLAN International
+                Conference on Software Language Engineering (SLE 2020). Association for Computing Machinery, New York, NY, USA,
+                155–174. https://doi.org/10.1145/3426425.3426940
+            </p>
+
+            <p>
+                [4] The
+                <a href="https://rocq-prover.org/doc/V8.20.0/refman/proofs/writing-proofs/reasoning-inductives.html#examples-of-dependent-destruction-dependent-induction">
+                  dependent destruction tactic
+                </a>
+                in the Rocq documentation, with some examples.
+            </p>
+
+            <br />
 
             <p>
                 Syntax highlighting is done using <a href="/tools/syntax-highligher">the highligher tool on this website</a>, which
                 uses <a href="https://highlightjs.org/">highlight-js</a>, together with some manual adjustments when the syntax
                 highligher does something strange.
-            </p>
-
-            <p>
-                The
-                <a href="/articles/formal-proving/dependent-destruction-without-axioms-interactive/plain.v.html">interactive web version</a>
-                is made using <a href="https://github.com/cpitclaudel/alectryon">Alectryon</a>. Citation:
-            </p>
-
-            <p id="untangling-mechanized-proofs">
-                [2] Clément Pit-Claudel. 2020. Untangling mechanized proofs. In Proceedings of the 13th ACM SIGPLAN International
-                Conference on Software Language Engineering (SLE 2020). Association for Computing Machinery, New York, NY, USA,
-                155–174. https://doi.org/10.1145/3426425.3426940
             </p>
 
         </main>
