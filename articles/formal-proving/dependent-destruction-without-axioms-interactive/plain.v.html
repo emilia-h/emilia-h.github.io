@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html class="alectryon-standalone"><head><title>test.v</title><meta charset="utf-8"><meta content="Alectryon" name="generator"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="alectryon.css" rel="stylesheet"><link href="pygments.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/IBM-type/0.5.4/css/ibm-type.min.css" integrity="sha512-sky5cf9Ts6FY1kstGOBHSybfKqdHR41M0Ldb0BjNiv3ifltoQIsg0zIaQ+wwdwgQ0w9vKFW7Js50lxH9vqNSSw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/firacode/5.2.0/fira_code.min.css" integrity="sha512-MbysAYimH1hH2xYzkkMHB6MqxBqfP0megxsCLknbYqHVwXTCg9IqHbk+ZP/vnhO8UEW6PaXAkKe2vQ+SWACxxA==" crossorigin="anonymous" /><script src="alectryon.js"></script></head><body><article class="alectryon-root alectryon-centered"><div class="alectryon-banner">Built with <a href="https://github.com/cpitclaudel/alectryon/">Alectryon</a>, running Coq+SerAPI v8.20.0+0.20.0. Bubbles (<span class="alectryon-bubble"></span>) indicate interactive fragments: hover for details, tap to reveal contents. Use <kbd>Ctrl+↑</kbd> <kbd>Ctrl+↓</kbd> to navigate, <kbd>Ctrl+🖱️</kbd> to focus. On Mac, use <kbd>⌘</kbd> instead of <kbd>Ctrl</kbd>.</div><pre class="alectryon-io highlight"><!-- Generator: Alectryon --><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">From</span> Coq <span class="kn">Require</span> Wf_nat.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk0" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk0"><span class="kn">From</span> Coq <span class="kn">Require Import</span> PeanoNat Lia.</label><small class="alectryon-output"><div><div class="alectryon-messages"><blockquote class="alectryon-message">[Loading ML file ring_plugin.cmxs (<span class="nb">using</span> legacy method) ... <span class="bp">done</span>]</blockquote><blockquote class="alectryon-message">[Loading ML file zify_plugin.cmxs (<span class="nb">using</span> legacy method) ... <span class="bp">done</span>]</blockquote><blockquote class="alectryon-message">[Loading ML file micromega_core_plugin.cmxs (<span class="nb">using</span> legacy method) ... <span class="bp">done</span>]</blockquote><blockquote class="alectryon-message">[Loading ML file micromega_plugin.cmxs (<span class="nb">using</span> legacy method) ... <span class="bp">done</span>]</blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Definition</span> <span class="nf">half</span> (<span class="nv">x</span> : nat) : option nat :=
+  <span class="kr">if</span> PeanoNat.Nat.Even_Odd_dec x
+  <span class="kr">then</span> <span class="c">(* even *)</span>
+    Some (Nat.div2 x)
+  <span class="kr">else</span> <span class="c">(* odd *)</span>
+    None
+.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk1" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk1"><span class="kn">Lemma</span> <span class="nf">half_some</span> :
+  <span class="kr">forall</span> <span class="nv">x</span> <span class="nv">y</span> : nat,
+  half x = Some y -&gt;
+    y + y = x
+.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> <span class="nv">x</span> <span class="nv">y</span> : nat, half x = Some y -&gt; y + y = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk2" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk2"><span class="nb">unfold</span> half.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> <span class="nv">x</span> <span class="nv">y</span> : nat,
+(<span class="kr">if</span> Nat.Even_Odd_dec x
+ <span class="kr">then</span> Some (Nat.div2 x)
+ <span class="kr">else</span> None) = Some y -&gt; y + y = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk3" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk3"><span class="nb">intros</span> x y h.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x, y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>(<span class="kr">if</span> Nat.Even_Odd_dec x
+ <span class="kr">then</span> Some (Nat.div2 x)
+ <span class="kr">else</span> None) = Some y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">y + y = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk4" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk4"><span class="nb">destruct</span> (Nat.Even_Odd_dec x) <span class="kr">as</span> [h&#39; |];
+    [| <span class="bp">congruence</span>].</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x, y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>Nat.Even x</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>Some (Nat.div2 x) = Some y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">y + y = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk5" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk5"><span class="nb">inversion_clear</span> h.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x, y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>Nat.Even x</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">Nat.div2 x + Nat.div2 x = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk6" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk6"><span class="nb">rewrite</span> Nat.Even_double <span class="bp">by</span> <span class="nb">auto</span>.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x, y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>Nat.Even x</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">Nat.div2 x + Nat.div2 x = Nat.double (Nat.div2 x)</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><span class="alectryon-input"><span class="nb">unfold</span> Nat.double <span class="kr">in</span> *; <span class="bp">lia</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Qed</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk7" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk7"><span class="kn">Corollary</span> <span class="nf">half_lt</span> :
+  <span class="kr">forall</span> <span class="nv">x</span> <span class="nv">y</span> : nat,
+  x &lt;&gt; <span class="mi">0</span> -&gt;
+  half x = Some y -&gt;
+    y &lt; x
+.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> <span class="nv">x</span> <span class="nv">y</span> : nat, x &lt;&gt; <span class="mi">0</span> -&gt; half x = Some y -&gt; y &lt; x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><span class="alectryon-input"><span class="nb">intros</span> x y not0 h; <span class="nb">apply</span> half_some <span class="kr">in</span> h; <span class="bp">lia</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Qed</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk8" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk8"><span class="kn">Fixpoint</span> <span class="nf">power_of_2</span> (<span class="nv">x</span> : nat) (<span class="nv">acc</span> : Acc Nat.lt x) : bool.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>power_of_2</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">x</span> : nat, Acc Nat.lt x -&gt; bool</span></span></span><br><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span>Acc Nat.lt x</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">bool</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk9" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk9"><span class="nb">refine</span> (
+    <span class="kr">if</span> Nat.eq_dec x <span class="mi">0</span>
+    <span class="kr">then</span> <span class="c">(* if x = 0 then x is not a power of 2 *)</span>
+      false
+    <span class="kr">else</span>
+      <span class="kr">if</span> Nat.eq_dec x <span class="mi">1</span>
+      <span class="kr">then</span> <span class="c">(* if x = 1 then x is a power of 2 *)</span>
+        true
+      <span class="kr">else</span>
+        <span class="kr">match</span> half x <span class="kr">with</span>
+        | Some y =&gt;
+          power_of_2 y (Acc_inv acc _)
+        | None =&gt;
+          false
+        <span class="kr">end</span>
+  ).</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>power_of_2</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">x</span> : nat, Acc Nat.lt x -&gt; bool</span></span></span><br><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span>Acc Nat.lt x</span></span></span><br><span><var>n</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>n0</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">Nat.lt y x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  <span class="c">(* proof that y &lt; x: unprovable *)</span>
+</span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Abort</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chka" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chka"><span class="kn">Fixpoint</span> <span class="nf">power_of_2&#39;</span> (<span class="nv">x</span> : nat) (<span class="nv">acc</span> : Acc Nat.lt x) : bool.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>power_of_2'</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">x</span> : nat, Acc Nat.lt x -&gt; bool</span></span></span><br><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span>Acc Nat.lt x</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">bool</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chkb" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chkb"><span class="nb">refine</span> (
+    <span class="kr">if</span> Nat.eq_dec x <span class="mi">0</span>
+    <span class="kr">then</span> <span class="c">(* if x = 0 then x is not a power of 2 *)</span>
+      false
+    <span class="kr">else</span>
+      <span class="kr">if</span> Nat.eq_dec x <span class="mi">1</span>
+      <span class="kr">then</span> <span class="c">(* if x = 1 then x is a power of 2 *)</span>
+        true
+      <span class="kr">else</span>
+        <span class="kr">match</span> half x <span class="kr">as</span> half&#39; <span class="kr">return</span> half x = half&#39; -&gt; _ <span class="kr">with</span>
+        | Some y =&gt; <span class="kr">fun</span> <span class="nv">h&#39;</span> =&gt;
+          <span class="c">(* _ needs a term of type y &lt; x *)</span>
+          power_of_2&#39; y (Acc_inv acc _)
+        | None =&gt; <span class="kr">fun</span> <span class="nv">h&#39;</span> =&gt;
+          false
+        <span class="kr">end</span> eq_refl
+  ).</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>power_of_2'</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">x</span> : nat, Acc Nat.lt x -&gt; bool</span></span></span><br><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span>Acc Nat.lt x</span></span></span><br><span><var>n</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>n0</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">Nat.lt y x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  <span class="c">(* proof that y &lt; x *)</span>
+</span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><span class="alectryon-input"><span class="nb">apply</span> half_lt; <span class="nb">auto</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Defined</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chkc" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chkc"><span class="kn">Lemma</span> <span class="nf">power_of_2&#39;_true</span> :
+  <span class="kr">forall</span> <span class="nv">x</span> : nat,
+  <span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt x,
+  power_of_2&#39; x acc = true -&gt;
+    <span class="kr">exists</span> <span class="nv">e</span> : nat, Nat.pow <span class="mi">2</span> e = x
+.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> (<span class="nv">x</span> : nat) (<span class="nv">acc</span> : Acc Nat.lt x),
+power_of_2&#39; x acc = true -&gt; <span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chkd" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chkd"><span class="nb">induction</span> x <span class="kr">as</span> [x ih] <span class="nb">using</span> (well_founded_ind Wf_nat.lt_wf).</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt x,
+power_of_2&#39; x acc = true -&gt; <span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chke" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chke"><span class="nb">intros</span> [acc] h; <span class="nb">simpl</span> <span class="kr">in</span> *.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span> Nat.eq_dec x <span class="mi">0</span> <span class="kr">with</span>
+| <span class="nb">left</span> _ =&gt; false
+| <span class="nb">right</span> x0 =&gt;
+    <span class="kr">if</span> Nat.eq_dec x <span class="mi">1</span>
+    <span class="kr">then</span> true
+    <span class="kr">else</span>
+     <span class="kr">match</span>
+       half x <span class="kr">as</span> half&#39;
+       <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+     <span class="kr">with</span>
+     | Some y =&gt;
+         <span class="kr">fun</span> <span class="nv">h&#39;</span> : half x = Some y =&gt;
+         power_of_2&#39; y (acc y (half_lt x y x0 h&#39;))
+     | None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+     <span class="kr">end</span> eq_refl
+<span class="kr">end</span> = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chkf" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chkf"><span class="nb">destruct</span> (Nat.eq_dec x <span class="mi">0</span>) <span class="kr">as</span> [h&#39; | h&#39;];
+    [<span class="bp">congruence</span> |].</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>(<span class="kr">if</span> Nat.eq_dec x <span class="mi">1</span>
+ <span class="kr">then</span> true
+ <span class="kr">else</span>
+  <span class="kr">match</span>
+    half x <span class="kr">as</span> half&#39;
+    <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+  <span class="kr">with</span>
+  | Some y =&gt;
+      <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+      power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+  | None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+  <span class="kr">end</span> eq_refl) = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk10" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk10"><span class="nb">destruct</span> (Nat.eq_dec x <span class="mi">1</span>) <span class="kr">as</span> [h&#39;&#39; | h&#39;&#39;].</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x = <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>true = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote><div class="alectryon-extra-goals"><input class="alectryon-extra-goal-toggle" id="test-v-chk11" style="display: none" type="checkbox"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span>
+  half x <span class="kr">as</span> half&#39; <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+<span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+<span class="kr">end</span> eq_refl = true</span></span></span><br></div><label class="goal-separator" for="test-v-chk11"><hr></label><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk12" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk12">-</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x = <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>true = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp"> </span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kr">exists</span> <span class="mi">0</span>; <span class="nb">auto</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk13" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk13">-</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span>
+  half x <span class="kr">as</span> half&#39; <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+<span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+<span class="kr">end</span> eq_refl = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp"> </span></span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk14" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk14"><span class="kn">Fail</span> <span class="nb">destruct</span> (half x).</label><small class="alectryon-output"><div><div class="alectryon-messages"><blockquote class="alectryon-message">The command has indeed failed <span class="kr">with</span> message:
+Abstracting <span class="nb">over</span> the term <span class="s2">&quot;o&quot;</span> leads to a term
+<span class="kr">fun</span> <span class="nv">o0</span> : option nat =&gt;
+<span class="kr">match</span> o0 <span class="kr">as</span> half&#39; <span class="kr">return</span> (o0 = half&#39; -&gt; bool) <span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : o0 = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : o0 = None =&gt; false
+<span class="kr">end</span> eq_refl = true -&gt; <span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x
+which <span class="kr">is</span> ill-typed.
+Reason <span class="kr">is</span>: Illegal application: 
+The term <span class="s2">&quot;half_lt&quot;</span> of type
+ <span class="s2">&quot;forall x y : nat, x &lt;&gt; 0 -&gt; half x = Some y -&gt; y &lt; x&quot;</span>
+cannot be applied to the terms
+ <span class="s2">&quot;x&quot;</span> : <span class="s2">&quot;nat&quot;</span>
+ <span class="s2">&quot;y&quot;</span> : <span class="s2">&quot;nat&quot;</span>
+ <span class="s2">&quot;h&#39;&quot;</span> : <span class="s2">&quot;x &lt;&gt; 0&quot;</span>
+ <span class="s2">&quot;h&#39;0&quot;</span> : <span class="s2">&quot;o0 = Some y&quot;</span>
+The <span class="mi">4</span>th term has type <span class="s2">&quot;o0 = Some y&quot;</span>
+which should be a subtype of <span class="s2">&quot;half x = Some y&quot;</span>.</blockquote></div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span>
+  half x <span class="kr">as</span> half&#39; <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+<span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+<span class="kr">end</span> eq_refl = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">    </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk15" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk15"><span class="nb">case_eq</span> (half x).</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span>
+  half x <span class="kr">as</span> half&#39; <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+<span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+<span class="kr">end</span> eq_refl = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> <span class="nv">n</span> : nat,
+half x = Some n -&gt; <span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote><div class="alectryon-extra-goals"><input class="alectryon-extra-goal-toggle" id="test-v-chk16" style="display: none" type="checkbox"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span>
+  half x <span class="kr">as</span> half&#39; <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+<span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+<span class="kr">end</span> eq_refl = true</span></span></span><br></div><label class="goal-separator" for="test-v-chk16"><hr></label><div class="goal-conclusion">half x = None -&gt; <span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">    </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk17" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk17">*</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span>
+  half x <span class="kr">as</span> half&#39; <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+<span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+<span class="kr">end</span> eq_refl = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> <span class="nv">n</span> : nat,
+half x = Some n -&gt; <span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp"> </span></span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk18" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk18"><span class="nb">intros</span> y is_some.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span>
+  half x <span class="kr">as</span> half&#39; <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+<span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+<span class="kr">end</span> eq_refl = true</span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>is_some</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">      </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk19" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk19"><span class="kn">Fail</span> <span class="nb">rewrite</span> is_some <span class="kr">in</span> h.</label><small class="alectryon-output"><div><div class="alectryon-messages"><blockquote class="alectryon-message">The command has indeed failed <span class="kr">with</span> message:
+Abstracting <span class="nb">over</span> the term <span class="s2">&quot;half x&quot;</span> leads to a term
+<span class="kr">fun</span> <span class="nv">o</span> : option nat =&gt;
+<span class="kr">match</span> o <span class="kr">as</span> half&#39; <span class="kr">return</span> (o = half&#39; -&gt; bool) <span class="kr">with</span>
+| Some y0 =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : o = Some y0 =&gt;
+    power_of_2&#39; y0 (acc y0 (half_lt x y0 h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : o = None =&gt; false
+<span class="kr">end</span> eq_refl = true
+which <span class="kr">is</span> ill-typed.
+Reason <span class="kr">is</span>: Illegal application: 
+The term <span class="s2">&quot;half_lt&quot;</span> of type
+ <span class="s2">&quot;forall x y : nat, x &lt;&gt; 0 -&gt; half x = Some y -&gt; y &lt; x&quot;</span>
+cannot be applied to the terms
+ <span class="s2">&quot;x&quot;</span> : <span class="s2">&quot;nat&quot;</span>
+ <span class="s2">&quot;y0&quot;</span> : <span class="s2">&quot;nat&quot;</span>
+ <span class="s2">&quot;h&#39;&quot;</span> : <span class="s2">&quot;x &lt;&gt; 0&quot;</span>
+ <span class="s2">&quot;h&#39;0&quot;</span> : <span class="s2">&quot;o = Some y0&quot;</span>
+The <span class="mi">4</span>th term has type <span class="s2">&quot;o = Some y0&quot;</span>
+which should be a subtype of <span class="s2">&quot;half x = Some y0&quot;</span>.</blockquote></div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span>
+  half x <span class="kr">as</span> half&#39; <span class="kr">return</span> (half x = half&#39; -&gt; bool)
+<span class="kr">with</span>
+| Some y =&gt;
+    <span class="kr">fun</span> <span class="nv">h&#39;0</span> : half x = Some y =&gt;
+    power_of_2&#39; y (acc y (half_lt x y h&#39; h&#39;0))
+| None =&gt; <span class="kr">fun</span> <span class="nv">_</span> : half x = None =&gt; false
+<span class="kr">end</span> eq_refl = true</span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>is_some</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Abort</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Inductive</span> <span class="nf">dep_option</span>
+  (<span class="nv">t</span> : <span class="kt">Type</span>)
+  (<span class="nv">P_some</span> : t -&gt; <span class="kt">Prop</span>)
+  (<span class="nv">P_none</span> : <span class="kt">Prop</span>)
+: <span class="kt">Type</span> :=
+  | dep_option_some :
+    <span class="kr">forall</span> <span class="nv">x</span> : t, P_some x -&gt; dep_option t P_some P_none
+  | dep_option_none :
+    P_none -&gt; dep_option t P_some P_none
+.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><span class="alectryon-input">#[<span class="kn">global</span>]
+<span class="kn">Arguments</span> dep_option_some {_} {_} {_} (_) (_).</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><span class="alectryon-input">#[<span class="kn">global</span>]
+<span class="kn">Arguments</span> dep_option_none {_} {_} {_} (_).</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Definition</span> <span class="nf">wrap_dep_option_eq</span> {<span class="nv">t</span> : <span class="kt">Type</span>} (<span class="nv">x</span> : option t) :
+  dep_option
+    t
+    (<span class="kr">fun</span> <span class="nv">y</span> =&gt; x = Some y)
+    (x = None)
+:=
+  <span class="kr">match</span> x <span class="kr">as</span> x&#39; <span class="kr">return</span> x = x&#39; -&gt; _ <span class="kr">with</span>
+  | Some x&#39; =&gt; <span class="kr">fun</span> <span class="nv">hyp</span> =&gt;
+    dep_option_some x&#39; hyp
+  | None =&gt; <span class="kr">fun</span> <span class="nv">hyp</span> =&gt;
+    dep_option_none hyp
+  <span class="kr">end</span> eq_refl
+.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk1a" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk1a"><span class="kn">Fixpoint</span> <span class="nf">power_of_2&#39;&#39;</span> (<span class="nv">x</span> : nat) (<span class="nv">acc</span> : Acc Nat.lt x) : bool.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>power_of_2''</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">x</span> : nat, Acc Nat.lt x -&gt; bool</span></span></span><br><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span>Acc Nat.lt x</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">bool</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk1b" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk1b"><span class="nb">refine</span> (
+    <span class="kr">if</span> Nat.eq_dec x <span class="mi">0</span>
+    <span class="kr">then</span> <span class="c">(* if x = 0 then x is not a power of 2 *)</span>
+      false
+    <span class="kr">else</span>
+      <span class="kr">if</span> Nat.eq_dec x <span class="mi">1</span>
+      <span class="kr">then</span> <span class="c">(* if x = 1 then x is a power of 2 *)</span>
+        true
+      <span class="kr">else</span>
+        <span class="kr">match</span> wrap_dep_option_eq (half x) <span class="kr">with</span>
+        | dep_option_some y _ =&gt;
+          power_of_2&#39;&#39; y (Acc_inv acc _)
+        | dep_option_none _ =&gt;
+          false
+        <span class="kr">end</span>
+  ).</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>power_of_2''</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">x</span> : nat, Acc Nat.lt x -&gt; bool</span></span></span><br><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span>Acc Nat.lt x</span></span></span><br><span><var>n</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>n0</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>e</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">Nat.lt y x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><span class="alectryon-input"><span class="nb">apply</span> half_lt; <span class="nb">auto</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Defined</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">
+</span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk1c" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk1c"><span class="kn">Lemma</span> <span class="nf">power_of_2&#39;&#39;_true</span> :
+  <span class="kr">forall</span> <span class="nv">x</span> : nat,
+  <span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt x,
+  power_of_2&#39;&#39; x acc = true -&gt;
+    <span class="kr">exists</span> <span class="nv">e</span> : nat, Nat.pow <span class="mi">2</span> e = x
+.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> (<span class="nv">x</span> : nat) (<span class="nv">acc</span> : Acc Nat.lt x),
+power_of_2&#39;&#39; x acc = true -&gt; <span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk1d" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk1d"><span class="nb">induction</span> x <span class="kr">as</span> [x ih] <span class="nb">using</span> (well_founded_ind Wf_nat.lt_wf).</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt x,
+power_of_2&#39;&#39; x acc = true -&gt; <span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk1e" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk1e"><span class="nb">intros</span> [acc] is_true; <span class="nb">simpl</span> <span class="kr">in</span> *.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span> Nat.eq_dec x <span class="mi">0</span> <span class="kr">with</span>
+| <span class="nb">left</span> _ =&gt; false
+| <span class="nb">right</span> x0 =&gt;
+    <span class="kr">if</span> Nat.eq_dec x <span class="mi">1</span>
+    <span class="kr">then</span> true
+    <span class="kr">else</span>
+     <span class="kr">match</span> wrap_dep_option_eq (half x) <span class="kr">with</span>
+     | dep_option_some y e =&gt;
+         power_of_2&#39;&#39; y
+           (acc y (half_lt x y x0 e))
+     | dep_option_none _ =&gt; false
+     <span class="kr">end</span>
+<span class="kr">end</span> = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk1f" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk1f"><span class="nb">destruct</span> (Nat.eq_dec x <span class="mi">0</span>) <span class="kr">as</span> [| h];
+    [<span class="bp">congruence</span> |].</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span>(<span class="kr">if</span> Nat.eq_dec x <span class="mi">1</span>
+ <span class="kr">then</span> true
+ <span class="kr">else</span>
+  <span class="kr">match</span> wrap_dep_option_eq (half x) <span class="kr">with</span>
+  | dep_option_some y e =&gt;
+      power_of_2&#39;&#39; y
+        (acc y (half_lt x y h e))
+  | dep_option_none _ =&gt; false
+  <span class="kr">end</span>) = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk20" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk20"><span class="nb">destruct</span> (Nat.eq_dec x <span class="mi">1</span>) <span class="kr">as</span> [h&#39; | h&#39;].</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x = <span class="mi">1</span></span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span>true = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote><div class="alectryon-extra-goals"><input class="alectryon-extra-goal-toggle" id="test-v-chk21" style="display: none" type="checkbox"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span> wrap_dep_option_eq (half x) <span class="kr">with</span>
+| dep_option_some y e =&gt;
+    power_of_2&#39;&#39; y (acc y (half_lt x y h e))
+| dep_option_none _ =&gt; false
+<span class="kr">end</span> = true</span></span></span><br></div><label class="goal-separator" for="test-v-chk21"><hr></label><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk22" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk22">-</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x = <span class="mi">1</span></span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span>true = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp"> </span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kr">exists</span> <span class="mi">0</span>; <span class="nb">auto</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">  </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk23" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk23">-</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span><span class="kr">match</span> wrap_dep_option_eq (half x) <span class="kr">with</span>
+| dep_option_some y e =&gt;
+    power_of_2&#39;&#39; y (acc y (half_lt x y h e))
+| dep_option_none _ =&gt; false
+<span class="kr">end</span> = true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp"> </span></span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk24" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk24"><span class="nb">destruct</span> (wrap_dep_option_eq (half x)) <span class="kr">as</span> [y h&#39;&#39; |];
+      [| <span class="bp">congruence</span>].</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span>power_of_2&#39;&#39; y (acc y (half_lt x y h h&#39;&#39;)) =
+true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">    </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk25" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk25"><span class="nb">apply</span> ih <span class="kr">in</span> is_true <span class="kr">as</span> [e].</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br><span><var>e</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>H</var><span class="hyp-type"><b>: </b><span><span class="mi">2</span> ^ e = y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote><div class="alectryon-extra-goals"><input class="alectryon-extra-goal-toggle" id="test-v-chk26" style="display: none" type="checkbox"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span>power_of_2&#39;&#39; y (acc y (half_lt x y h h&#39;&#39;)) =
+true</span></span></span><br></div><label class="goal-separator" for="test-v-chk26"><hr></label><div class="goal-conclusion">y &lt; x</div></blockquote></div></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">    </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk27" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk27">*</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br><span><var>e</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>H</var><span class="hyp-type"><b>: </b><span><span class="mi">2</span> ^ e = y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp"> </span></span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk28" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk28"><span class="nb">apply</span> half_some <span class="kr">in</span> h&#39;&#39;.</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>y + y = x</span></span></span><br><span><var>e</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>H</var><span class="hyp-type"><b>: </b><span><span class="mi">2</span> ^ e = y</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion"><span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = x</div></blockquote></div></div></small><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">      </span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kr">exists</span> (<span class="nv">S</span> <span class="nv">e</span>); <span class="nb">simpl</span>; <span class="bp">lia</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-wsp">    </span><span class="alectryon-sentence"><input class="alectryon-toggle" id="test-v-chk29" style="display: none" type="checkbox"><label class="alectryon-input" for="test-v-chk29">*</label><small class="alectryon-output"><div><div class="alectryon-goals"><blockquote class="alectryon-goal"><div class="goal-hyps"><span><var>x</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>ih</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat,
+y &lt; x -&gt;
+<span class="kr">forall</span> <span class="nv">acc</span> : Acc Nat.lt y,
+power_of_2&#39;&#39; y acc = true -&gt;
+<span class="kr">exists</span> <span class="nv">e</span> : nat, <span class="mi">2</span> ^ e = y</span></span></span><br><span><var>acc</var><span class="hyp-type"><b>: </b><span><span class="kr">forall</span> <span class="nv">y</span> : nat, Nat.lt y x -&gt; Acc Nat.lt y</span></span></span><br><span><var>h</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">0</span></span></span></span><br><span><var>h'</var><span class="hyp-type"><b>: </b><span>x &lt;&gt; <span class="mi">1</span></span></span></span><br><span><var>y</var><span class="hyp-type"><b>: </b><span>nat</span></span></span><br><span><var>h''</var><span class="hyp-type"><b>: </b><span>half x = Some y</span></span></span><br><span><var>is_true</var><span class="hyp-type"><b>: </b><span>power_of_2&#39;&#39; y (acc y (half_lt x y h h&#39;&#39;)) =
+true</span></span></span><br></div><span class="goal-separator"><hr></span><div class="goal-conclusion">y &lt; x</div></blockquote></div></div></small><span class="alectryon-wsp"> </span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="nb">apply</span> half_lt; <span class="nb">auto</span>.</span><span class="alectryon-wsp">
+</span></span><span class="alectryon-sentence"><span class="alectryon-input"><span class="kn">Qed</span>.</span><span class="alectryon-wsp">
+</span></span></pre></article></body></html>

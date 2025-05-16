@@ -1,0 +1,283 @@
+
+#HEAD
+<title>A Trick for Dependent Destruction Without Axioms - emi-h.com</title>
+
+#MAIN
+<h1 id="title"><a href="#title">A Trick for Dependent Destruction Without Axioms</a></h1>
+
+<p>
+    We explore a trick that can be used in the Rocq proof assistant (formerly known as Coq) for dependent pattern
+    matching and dependent destruction without Axiom K.
+</p>
+
+<p>
+    Sometimes when defining a function in Rocq, there are situations where we want to use dependent pattern matching
+    instead of the normal primitive pattern matching. In particular, a situation that I come across a lot is a
+    <code>Fixpoint</code> definition with well-founded recursion (as opposed to structural recursion), where the proof
+    that the  has to be embedded in the definition of the function.
+</p>
+
+<code><pre>
+  <span class="hljs-keyword">Fixpoint</span> recursive_function (param : t1) (acc : Acc <span class="hljs-keyword">R</span> param) : t2 :=
+    <span class="hljs-keyword">match</span> (f param) <span class="hljs-keyword">as</span> matchee <span class="hljs-keyword">return</span> f param = matchee&#x27; -&gt; <span class="hljs-keyword">_</span> <span class="hljs-keyword">with</span>
+    | <span class="hljs-type">constructor1</span> args =&gt; <span class="hljs-keyword">fun</span> equal =&gt;
+      recursive_function (g args) (Acc_inv acc (PROOF HERE))
+    | <span class="hljs-type">constructor2</span> args =&gt; <span class="hljs-keyword">fun</span> equal =&gt;
+      <span class="hljs-comment">(* etc. *)</span>
+    <span class="hljs-keyword">end</span>
+  .
+</pre></code>
+
+<p>
+    If you want more background information about well-founded recursion, consider checking out this paper by Xavier
+    Leroy <a href="#well-founded-recursion-done-right">[1]</a> or
+    <a href="https://gijs-pennings.github.io/rocq-wf-recursion/tutorial.html">
+        a more comprehensive tutorial by Gijs Pennings
+    </a>
+    . However, this article is about a more general technique that applies in any dependent pattern matching situation.
+</p>
+
+<p>
+    There is also an
+    <a href="/articles/formal-proving/dependent-destruction-without-axioms-interactive/plain.v.html">interactive web version</a>
+    available, which I recommend you open on the side if you want to check the details of a proof. The
+    <a href="https://github.com/emilia-h/emilia-h.github.io/blob/main/code/dependent-destruction-without-axioms.v">unprocessed code</a>
+    is also available.
+</p>
+
+<h2 id="example"><a href="#example">Example</a></h2>
+
+<p>
+    As an example, we try to write a function that tests if something is a power of 2 by repeatedly dividing the number
+    by 2 until it is either equal to 1 or odd. The way I implement this is not theonly way and likely not the most
+    straightforward way, but it demonstrates the issue.
+</p>
+
+<p>
+    First we have a function that tries to half a natural number if it is even or returns <code>None</code> if it is
+    odd:
+</p>
+
+<code><pre>
+  <span class="hljs-keyword">From</span> Coq <span class="hljs-keyword">Require</span> Wf_nat.
+  <span class="hljs-keyword">From</span> Coq <span class="hljs-keyword">Require</span> <span class="hljs-keyword">Import</span> PeanoNat Lia.
+  
+  <span class="hljs-keyword">Definition</span> half (x : nat) : option nat :=
+    <span class="hljs-keyword">if</span> Nat.Even_Odd_dec x
+    <span class="hljs-keyword">then</span> <span class="hljs-comment">(* even *)</span>
+      <span class="hljs-type">Some</span> (Nat.div2 x)
+    <span class="hljs-keyword">else</span> <span class="hljs-comment">(* odd *)</span>
+      <span class="hljs-type">None</span>
+  .
+</pre></code>
+
+<p>We also prove two basic properties about it (the contents of the proof do not really matter):</p>
+
+<code><pre>
+  <span class="hljs-keyword">Lemma</span> half_some :
+    <span class="hljs-keyword">forall</span> x y : nat,
+    half x = <span class="hljs-type">Some</span> y -&gt;
+      y + y = x
+  .
+    <span class="hljs-built_in">unfold</span> half.
+    <span class="hljs-built_in">intros</span> x y h.
+    <span class="hljs-built_in">destruct</span> (Nat.Even_Odd_dec x) <span class="hljs-built_in">as</span> [h&#x27; |];
+      [| <span class="hljs-built_in">congruence</span>].
+    <span class="hljs-built_in">inversion_clear</span> h.
+    <span class="hljs-built_in">rewrite</span> Nat.Even_double <span class="hljs-built_in">by</span> <span class="hljs-built_in">auto</span>.
+    <span class="hljs-built_in">unfold</span> Nat.double <span class="hljs-built_in">in</span> *; <span class="hljs-built_in">lia</span>.
+  <span class="hljs-keyword">Qed</span>.
+  
+  <span class="hljs-keyword">Corollary</span> half_lt :
+    <span class="hljs-keyword">forall</span> x y : nat,
+    x &lt;&gt; <span class="hljs-number">0</span> -&gt;
+    half x = <span class="hljs-type">Some</span> y -&gt;
+      y &lt; x
+  .
+    <span class="hljs-built_in">intros</span> x y not0 h; <span class="hljs-built_in">apply</span> half_some <span class="hljs-built_in">in</span> h; <span class="hljs-built_in">lia</span>.
+  <span class="hljs-keyword">Qed</span>.
+</pre></code>
+
+<p>Now, ...</p>
+
+<code><pre>
+  <span class="hljs-keyword">Fixpoint</span> power_of_2 (x : nat) (acc : Acc Nat.lt x) : bool.
+    <span class="hljs-built_in">refine</span> (
+      <span class="hljs-keyword">if</span> Nat.eq_dec x <span class="hljs-number">0</span>
+      <span class="hljs-keyword">then</span> <span class="hljs-comment">(* if x = 0 then x is not a power of 2 *)</span>
+        false
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> Nat.eq_dec x <span class="hljs-number">1</span>
+      <span class="hljs-keyword">then</span> <span class="hljs-comment">(* if x = 1 then x is a power of 2 *)</span>
+        true
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">match</span> half x <span class="hljs-keyword">with</span>
+        | <span class="hljs-type">Some</span> y =&gt;
+          power_of_2 y (Acc_inv acc <span class="hljs-keyword">_</span>)
+        | <span class="hljs-type">None</span> =&gt;
+          false
+        <span class="hljs-keyword">end</span>
+    ).
+    <span class="hljs-comment">(* proof that y &lt; x: unprovable *)</span>
+  <span class="hljs-keyword">Abort</span>.
+</pre></code>
+
+<p>
+    Stuff...
+</p>
+
+<code><pre>
+  <span class="hljs-keyword">Fixpoint</span> power_of_2&#x27; (x : nat) (acc : Acc Nat.lt x) : bool.
+    <span class="hljs-built_in">refine</span> (
+      <span class="hljs-keyword">if</span> Nat.eq_dec x <span class="hljs-number">0</span>
+      <span class="hljs-keyword">then</span> <span class="hljs-comment">(* if x = 0 then x is not a power of 2 *)</span>
+        false
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> Nat.eq_dec x <span class="hljs-number">1</span>
+      <span class="hljs-keyword">then</span> <span class="hljs-comment">(* if x = 1 then x is a power of 2 *)</span>
+        true
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">match</span> half x <span class="hljs-keyword">as</span> half&#x27; <span class="hljs-keyword">return</span> half x = half&#x27; -&gt; <span class="hljs-keyword">_</span> <span class="hljs-keyword">with</span>
+        | <span class="hljs-type">Some</span> y =&gt; <span class="hljs-keyword">fun</span> h&#x27; =&gt;
+          <span class="hljs-comment">(* _ needs a term of type y &lt; x *)</span>
+          power_of_2&#x27; y (Acc_inv acc <span class="hljs-keyword">_</span>)
+        | <span class="hljs-type">None</span> =&gt; <span class="hljs-keyword">fun</span> h&#x27; =&gt;
+          false
+        <span class="hljs-keyword">end</span> eq_refl
+    ).
+    <span class="hljs-comment">(* proof that y &lt; x *)</span>
+    <span class="hljs-built_in">apply</span> half_lt; <span class="hljs-built_in">auto</span>.
+  <span class="hljs-keyword">Defined</span>.
+  
+  <span class="hljs-keyword">Lemma</span> power_of_2&#x27;_true :
+    <span class="hljs-keyword">forall</span> x : nat,
+    <span class="hljs-keyword">forall</span> acc : Acc Nat.lt x,
+    power_of_2&#x27; x acc = true -&gt;
+      <span class="hljs-keyword">exists</span> e : nat, Nat.pow <span class="hljs-number">2</span> e = x
+  .
+    <span class="hljs-built_in">induction</span> x <span class="hljs-built_in">as</span> [x ih] <span class="hljs-built_in">using</span> (well_founded_ind Wf_nat.lt_wf).
+    <span class="hljs-built_in">intros</span> [acc] h; <span class="hljs-built_in">simpl</span> <span class="hljs-built_in">in</span> *.
+    <span class="hljs-built_in">destruct</span> (Nat.eq_dec x <span class="hljs-number">0</span>) <span class="hljs-built_in">as</span> [h&#x27; | h&#x27;];
+      [<span class="hljs-built_in">congruence</span> |].
+    <span class="hljs-built_in">destruct</span> (Nat.eq_dec x <span class="hljs-number">1</span>) <span class="hljs-built_in">as</span> [h&#x27;&#x27; | h&#x27;&#x27;].
+    - <span class="hljs-built_in">exists</span> <span class="hljs-number">0</span>; <span class="hljs-built_in">auto</span>.
+    - <span class="hljs-keyword">Fail</span> <span class="hljs-built_in">destruct</span> (half x).
+      <span class="hljs-built_in">case_eq</span> (half x).
+      * <span class="hljs-built_in">intros</span> y is_some.
+        <span class="hljs-keyword">Fail</span> <span class="hljs-built_in">rewrite</span> is_some <span class="hljs-built_in">in</span> h.
+  <span class="hljs-keyword">Abort</span>.
+</pre></code>
+
+<p>
+    Bla bla bla
+</p>
+
+<code><pre>
+  <span class="hljs-keyword">Inductive</span> dep_option
+    (t : <span class="hljs-keyword">Type</span>)
+    (P_some : t -&gt; <span class="hljs-keyword">Prop</span>)
+    (P_none : <span class="hljs-keyword">Prop</span>)
+  : <span class="hljs-keyword">Type</span> :=
+    | <span class="hljs-type">dep_option_some</span> :
+      <span class="hljs-keyword">forall</span> x : t, P_some x -&gt; dep_option t P_some P_none
+    | <span class="hljs-type">dep_option_none</span> :
+      P_none -&gt; dep_option t P_some P_none
+  .
+  
+  #[global]
+  <span class="hljs-keyword">Arguments</span> dep_option_some {<span class="hljs-keyword">_</span>} {<span class="hljs-keyword">_</span>} {<span class="hljs-keyword">_</span>} (<span class="hljs-keyword">_</span>) (<span class="hljs-keyword">_</span>).
+  
+  #[global]
+  <span class="hljs-keyword">Arguments</span> dep_option_none {<span class="hljs-keyword">_</span>} {<span class="hljs-keyword">_</span>} {<span class="hljs-keyword">_</span>} (<span class="hljs-keyword">_</span>).
+  
+  <span class="hljs-keyword">Definition</span> wrap_dep_option_eq {t : <span class="hljs-keyword">Type</span>} (x : option t) :
+    dep_option
+      t
+      (<span class="hljs-keyword">fun</span> y =&gt; x = <span class="hljs-type">Some</span> y)
+      (x = <span class="hljs-type">None</span>)
+  :=
+    <span class="hljs-keyword">match</span> x <span class="hljs-keyword">as</span> x&#x27; <span class="hljs-keyword">return</span> x = x&#x27; -&gt; <span class="hljs-keyword">_</span> <span class="hljs-keyword">with</span>
+    | <span class="hljs-type">Some</span> x&#x27; =&gt; <span class="hljs-keyword">fun</span> hyp =&gt;
+      dep_option_some x&#x27; hyp
+    | <span class="hljs-type">None</span> =&gt; <span class="hljs-keyword">fun</span> hyp =&gt;
+      dep_option_none hyp
+    <span class="hljs-keyword">end</span> eq_refl
+  .
+</pre></code>
+
+<p>
+    Bla more bla
+</p>
+
+<code><pre>
+  <span class="hljs-keyword">Fixpoint</span> power_of_2&#x27;&#x27; (x : nat) (acc : Acc Nat.lt x) : bool.
+    <span class="hljs-built_in">refine</span> (
+      <span class="hljs-keyword">if</span> Nat.eq_dec x <span class="hljs-number">0</span>
+      <span class="hljs-keyword">then</span> <span class="hljs-comment">(* if x = 0 then x is not a power of 2 *)</span>
+        false
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> Nat.eq_dec x <span class="hljs-number">1</span>
+      <span class="hljs-keyword">then</span> <span class="hljs-comment">(* if x = 1 then x is a power of 2 *)</span>
+        true
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">match</span> wrap_dep_option_eq (half x) <span class="hljs-keyword">with</span>
+        | <span class="hljs-type">dep_option_some</span> y <span class="hljs-keyword">_</span> =&gt;
+          power_of_2&#x27;&#x27; y (Acc_inv acc <span class="hljs-keyword">_</span>)
+        | <span class="hljs-type">dep_option_none</span> <span class="hljs-keyword">_</span> =&gt;
+          false
+        <span class="hljs-keyword">end</span>
+    ).
+    <span class="hljs-built_in">apply</span> half_lt; <span class="hljs-built_in">auto</span>.
+  <span class="hljs-keyword">Defined</span>.
+</pre></code>
+
+<p>
+    Bla?
+</p>
+
+<code><pre>
+  <span class="hljs-keyword">Lemma</span> power_of_2&#x27;&#x27;_true :
+    <span class="hljs-keyword">forall</span> x : nat,
+    <span class="hljs-keyword">forall</span> acc : Acc Nat.lt x,
+    power_of_2&#x27;&#x27; x acc = true -&gt;
+      <span class="hljs-keyword">exists</span> e : nat, Nat.pow <span class="hljs-number">2</span> e = x
+  .
+    <span class="hljs-built_in">induction</span> x <span class="hljs-built_in">as</span> [x ih] <span class="hljs-built_in">using</span> (well_founded_ind Wf_nat.lt_wf).
+    <span class="hljs-built_in">intros</span> [acc] is_true; <span class="hljs-built_in">simpl</span> <span class="hljs-built_in">in</span> *.
+    <span class="hljs-built_in">destruct</span> (Nat.eq_dec x <span class="hljs-number">0</span>) <span class="hljs-built_in">as</span> [| h];
+      [<span class="hljs-built_in">congruence</span> |].
+    <span class="hljs-built_in">destruct</span> (Nat.eq_dec x <span class="hljs-number">1</span>) <span class="hljs-built_in">as</span> [h&#x27; | h&#x27;].
+    - <span class="hljs-built_in">exists</span> <span class="hljs-number">0</span>; <span class="hljs-built_in">auto</span>.
+    - <span class="hljs-built_in">destruct</span> (wrap_dep_option_eq (half x)) <span class="hljs-built_in">as</span> [y h&#x27;&#x27; |];
+        [| <span class="hljs-built_in">congruence</span>].
+      <span class="hljs-built_in">apply</span> ih <span class="hljs-built_in">in</span> is_true <span class="hljs-built_in">as</span> [e].
+      * <span class="hljs-built_in">apply</span> half_some <span class="hljs-built_in">in</span> h&#x27;&#x27;.
+        <span class="hljs-built_in">exists</span> (S e).
+        <span class="hljs-built_in">simpl</span>; <span class="hljs-built_in">lia</span>.
+      * <span class="hljs-built_in">apply</span> half_lt; <span class="hljs-built_in">auto</span>.
+  <span class="hljs-keyword">Qed</span>.
+</pre></code>
+
+<h2 id="references"><a href="#references">References and Links</a></h2>
+
+<p id="well-founded-recursion-done-right">
+    [1] Xavier Leroy. Well-founded recursion done right. CoqPL 2024: The Tenth International Workshop on Coq for
+    Programming Languages, ACM, Jan 2024, London, United Kingdom. hal-04356563v2
+</p>
+
+<p>
+    Syntax highlighting is done using <a href="/tools/syntax-highligher">the highligher tool on this website</a>, which
+    uses <a href="https://highlightjs.org/">highlight-js</a>, together with some manual adjustments when the syntax
+    highligher does something strange.
+</p>
+
+<p>
+    The
+    <a href="/articles/formal-proving/dependent-destruction-without-axioms-interactive/plain.v.html">interactive web version</a>
+    is made using <a href="https://github.com/cpitclaudel/alectryon">Alectryon</a>. Citation:
+</p>
+
+<p id="untangling-mechanized-proofs">
+    [2] Clément Pit-Claudel. 2020. Untangling mechanized proofs. In Proceedings of the 13th ACM SIGPLAN International
+    Conference on Software Language Engineering (SLE 2020). Association for Computing Machinery, New York, NY, USA,
+    155–174. https://doi.org/10.1145/3426425.3426940
+</p>
+
+#SCRIPT

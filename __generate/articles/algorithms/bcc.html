@@ -99,7 +99,7 @@
 
     <div>
         <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-3.svg" />
-        <p><em>If Eve sabotages this edge: remove pairs starting with 2 ending with 1/4/5/8</em></p>
+        <p><em>If Eve sabotages this edge: remove pairs starting with 2 ending with 1/5/8</em></p>
     </div>
 
     <div>
@@ -121,7 +121,7 @@
         <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-cc-7.svg" />
         <p><em>
             If Eve sabotages this edge: remove pairs starting with 2/3/4 ending with 5/8, and pairs starting with 7/8
-            ending with 1/4
+            ending with 1/2
         </em></p>
     </div>
 
@@ -159,6 +159,8 @@
 
 <p>We can (suggestively) draw the pairs in the graph as follows:</p>
 
+TODO: fix wrong green arc
+
 <img class="light-mode-only" style="width: min(100%, 30em);" src="/images/algorithms/bcc/light-example-1-all-pairs.svg" />
 
 <p>
@@ -191,7 +193,7 @@
 <p>
     It turns out that edge-biconnectedness is in fact an equivalence relation. The proofs for these properties are
     definitely doable to do for yourself! (Try this! Or look at the proof for the first property and then try the other
-    two yourself. For transitivity, you have consider that the two assumed paths can be overlapping.) Regardless, I
+    two yourself. For transitivity, you have to consider that the two assumed paths can be overlapping.) Regardless, I
     will give the proof here, together with a "proof by picture":
 </p>
 
@@ -367,7 +369,7 @@
 <ul>
     <li>
         <em>Edge-biconnectedness</em> (for pairs of nodes): a node \( u \) is edge-biconnected to a node \( v \) if
-        there exist two edge-disjoint paths from \( u \) to \( v \).
+        for any edge \( e \), we can find a path from \( u \) to \( v \) that does not go through \( e \).
     </li>
     <li>
         <em>Edge-biconnectedness</em> (for whole undirected graphs): a graph is edge-biconnected if the graph is
